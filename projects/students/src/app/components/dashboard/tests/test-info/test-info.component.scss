@@ -1,0 +1,108 @@
+@import '../../../.././../variables.scss';
+.ti-container{
+    background-color: $white-color;
+    padding: 0px 25px 10px;
+    margin-top:30px;
+    border-radius: 5px;
+    max-height: 700px;
+    overflow-y: auto;
+    z-index:5000;
+    .ti-modal-header{
+        display:flex;
+        position:sticky;
+        top:0;
+        z-index: 1000;
+        padding:20px 0;
+        background-color: $white-color;
+        justify-content: space-between;
+        .close{
+            height:30px;
+            width:30px;
+            border-radius: 50%;
+            padding:10px;
+            font-size: 16px;
+            display: flex;
+            color:$red-color;
+            cursor:pointer;
+            justify-content: center;
+            align-items: center;
+            border:1px solid $red-color;
+        }
+    }
+    .ti-stats-container{
+        display: flex;
+        justify-content: space-between;
+        .ti-stat{
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            .stat-block{
+                display: flex;
+                align-items: center;
+                column-gap: 10px;
+                .stat-num{
+                    color:#505050;
+                }
+            }
+            .stat-timer-block{
+                background-color: $body-color;
+                border-radius: 5px;
+                .timer-heading{
+                    font-size: 0.8rem;
+                    padding:5px 0;
+                    border-radius:5px 5px 0 0 ;
+                    text-align: center;
+                    background-color: $secondary-color;
+                    color:$white-color;
+                }
+                .stat-timer{
+                    padding:8px 25px;
+                }
+            }
+        }
+    }
+    .ti-instructions{
+        margin:20px auto;
+        h6{
+            margin-bottom:15px;
+        }
+        ol{
+            font-size: 0.85rem;
+            font-weight: normal;
+            line-height: 30px;
+            color:$black-color;
+        }
+    }
+    .ti-table{
+        margin:3rem auto 1rem;
+        thead {
+            font-size: 0.85rem;
+            font-weight: normal;
+            color:$black-color;
+            background-color: $primary-color;
+            tr{
+                padding:20px;
+                color:$white-color;
+            }
+        }
+        th,td{
+            padding:15px;
+        }
+        td{
+            font-size: 0.85rem;
+        }
+    }
+    .start-container{
+        display: flex;
+        justify-content: center ;
+        .start-test{
+            padding:8px 28px;
+            border:none;
+            outline: none;
+            color:$white-color;
+            background-color: $primary-color;
+            border-radius: 5px;
+            margin:20px 0;
+        }
+    }
+}

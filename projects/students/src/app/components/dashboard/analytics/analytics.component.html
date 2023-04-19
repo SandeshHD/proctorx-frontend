@@ -1,0 +1,50 @@
+<div class="container my-4 p-0">
+    <div class="statcard-container">
+        <app-statcard color="blue" label="Overall Rank" [value]="stats && (stats.overall_rank<10?'0'+stats.overall_rank:stats.overall_rank)"></app-statcard>
+        <app-statcard color="green" label="Tests Attended" [value]="stats && (stats.tests_attended<10?'0'+stats.tests_attended:stats.tests_attended)"></app-statcard>
+        <app-statcard color="purple" label="Total Score" [value]="stats && (stats.total_score<10?'0'+stats.total_score:stats.total_score)"></app-statcard>
+        <app-statcard color="red" label="Tests Missed" [value]="stats && (stats.tests_missed<10?'0'+stats.tests_missed:stats.tests_missed)"></app-statcard>
+    </div>
+    <div class="block-container mt-4">
+        <div class="block pie-chart">
+            <h6 class="block-label mb-3">Skill Division</h6>
+            <p-chart type="doughnut" [data]="topicScore" [options]="skillsOptions"></p-chart>
+        </div>
+        <div class="block line-chart">
+            <h6 class="block-label mb-4">Performance</h6>
+            <p-chart type="line" [data]="performance" [options]="performanceOptions" styleClass="h-100"></p-chart>
+        </div>
+    </div>
+    <div class="block-container activities-container mt-4">
+        <div class="block leaderboard">
+            <div class="lb-container">
+                <h6 class="block-label m-0">Leaderboard</h6>
+                <a class="more">More <i class="pi pi-arrow-right mx-2" style="color:#DD614A;"></i></a>
+            </div>
+            <table class="leaderboard-table table mt-4">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Name</th>
+                        <th>USN</th>
+                        <th>Tests Tasks</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let student of leaderboard">
+                        <td>{{student.rank}}</td>
+                        <td>{{student.name}}</td>
+                        <td>{{student.usn}}</td>
+                        <td>{{student.tests_attended}}</td>
+                        <td>{{student.total_score}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="block recent-activities">
+            <h6 class="block-label mb-4">Noticeboard</h6>
+            <app-activity *ngFor="let notice of noticeboard" [notice]="notice"></app-activity>
+        </div>
+    </div>
+</div>

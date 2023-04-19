@@ -1,0 +1,32 @@
+@import "../../../variables.scss";
+.user-icon{
+    border: 1.5px solid #6c757d;
+    border-radius: 50%;
+    height: 30px;
+    width:30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color:#6c757d;
+}
+
+.dashboard-link{
+    color: #000;
+}
+.dashboard-link.active::after{
+    content: "";
+    display: block;
+    height: 3px;
+    width:80%;
+    margin-top:5px;
+    border-radius: 5px;
+    background-color: $secondary-color;
+}
+
+.navlinks{
+    background-color:$white-color ;
+}
+.navbar{
+    background-color: $white-color;
+
+}

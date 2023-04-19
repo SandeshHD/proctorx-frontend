@@ -1,0 +1,30 @@
+@import '../../../../../variables.scss';
+.test-card{
+    background-color: $white-color;
+    width:100%;
+    border-radius: 5px;
+    padding:25px 40px;
+}
+
+.deadline{
+    font-size: 0.9rem;
+}
+
+.info-section{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    grid-template-rows: repeat(2,1fr);
+    row-gap:20px;
+}
+
+.info-desc{
+    color: $light-dark;
+}
+
+.take-test{
+    display: block;
+    margin:auto;
+    background-color: $primary-color;
+    color:$white-color;
+    padding:8px 30px;
+}

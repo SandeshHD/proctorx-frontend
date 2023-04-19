@@ -1,0 +1,22 @@
+@import '../../../../../variables.scss';
+.activity-container{
+    display: flex;
+    justify-content: space-between;
+    padding:15px;
+    margin:15px auto;
+    align-items: center;
+    background-color: #FCFBFB;
+    
+    .activity-by{
+        font-size: 0.8rem;
+    }
+    .read-more{
+        background-color: $primary-color;
+        color:$white-color;
+        padding:8px 18px;
+        border:none;
+        font-size: 0.8rem;
+        border-radius: 5px;
+        height: fit-content;
+    }
+}

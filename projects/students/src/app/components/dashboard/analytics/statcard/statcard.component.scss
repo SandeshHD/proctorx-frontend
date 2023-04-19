@@ -1,0 +1,45 @@
+@import '../../../../../variables.scss';
+.statcard{
+    background-color: $white-color;
+    padding:10px 30px;
+    border-radius: 5px;
+    align-items: center;
+    &-number{
+        margin-bottom:0;
+        color:$black-color;
+        font-weight:600;
+        margin-top:5px;
+        font-size: 2rem;
+    }
+    &-label{
+        font-weight: 500;
+        font-size:0.85em;
+    }
+
+    &-right{
+        height: 40px;
+        border-radius: 50%;
+        background-color: $body-color;
+        width: 40px;
+    }
+}
+
+.blue{
+    border-left:4px solid $blue-color;
+    color: $blue-color;
+}
+
+.green{
+    border-left:4px solid $green-color;
+    color: $green-color;
+}
+
+.purple{
+    border-left:4px solid $purple-color;
+    color:$purple-color;
+}
+
+.red{
+    border-left:4px solid $red-color;
+    color:$red-color;
+}

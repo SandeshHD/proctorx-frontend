@@ -1,0 +1,13 @@
+<div class="container-fluid dashboard-container p-0 navbar">
+    <div class="container py-4 d-flex justify-content-between">
+        <h5 class="brand">Proctor <span class="colored">X</span></h5>
+        <div class="navlinks d-flex gap-3">
+            <a class="text-decoration-none dashboard-link" routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Tests</a>
+            <a class="text-decoration-none dashboard-link" routerLink="analytics" routerLinkActive="active">Analytics</a>
+        </div>
+        <div class="user-icon"><i class="pi pi-user"></i></div>
+    </div>
+</div>
+<div class="container">
+    <router-outlet></router-outlet>
+</div>

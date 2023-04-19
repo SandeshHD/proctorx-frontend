@@ -1,0 +1,51 @@
+<p-toast position="bottom-right"></p-toast>
+<div class="tests-modal" *ngIf="testShow">
+    <app-test-info [test]="testShow" (onModalClose)="closeModal($event)"></app-test-info>
+</div>
+<div class="row">
+    <h5 class="my-4 dashboard-heading">Upcoming tests</h5>
+    <div class="text-container">
+        <app-test *ngFor="let test of tests" [test]="test" (openModal)="openModal($event)"></app-test>
+    </div>
+</div>
+<div class="row my-4">
+    <h5 class="my-3 dashboard-heading">Attended tests</h5>
+    <p-table #dt1 [value]="attendedTests" styleClass="mb-5" [rows]="5" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]"
+    [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [globalFilterFields]="['name','faculty','date']">
+    <ng-template pTemplate="caption">
+        <div class="flex">
+            <span class="p-input-icon-left ml-auto">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="applyFilterGlobal($event, 'contains')" placeholder="Search keyword" />
+            </span>
+        </div>
+    </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th>ID</th>
+                <th>Test Name</th>
+                <th>Faculty</th>
+                <th>Date</th>
+                <th>Sections</th>
+                <th>Maximum Score</th>
+                <th>Your Score</th>
+                <th>Action</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-test>
+            <tr>
+                <td>{{test.id}}</td>
+                <td>{{test.test_name}}</td>
+                <td>{{test.name}}</td>
+                <td>{{test.attended_data|date}}</td>
+                <td>{{test.sections}}</td>
+                <td>{{test.marks}}</td>
+                <td>{{test.score}}</td>
+                <td>Action</td>
+            </tr>
+        </ng-template>
+    </p-table>
+    
+    
+</div>

@@ -1,0 +1,18 @@
+<div class="container-fluid">
+    <div class="row auth-container">
+        <div class="auth-left bg-light col-7">
+            <div class="brand fw-500 fs-5 m-4">Proctor <span class="colored">X</span></div>
+        </div>
+        <div class="auth-right col-5 overflow-auto h-100 py-5 d-grid align-items-center">
+            <div class="row mx-4">
+                <div class="auth-links d-flex justify-content-center gap-3">
+                    <a class="text-uppercase text-decoration-none auth-link" routerLink="/auth" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">sign in</a>
+                    <a class="text-uppercase text-decoration-none auth-link" routerLink="signup" routerLinkActive="active">sign up</a>
+                </div>
+                <div class="router-container">
+                    <router-outlet></router-outlet>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

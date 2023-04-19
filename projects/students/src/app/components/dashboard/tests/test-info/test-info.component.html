@@ -1,0 +1,64 @@
+<div class="container ti-container m-auto">
+    <div class="ti-modal-header">
+        <div class="ti-toparea">
+            <h6 class="ti-heading m-0">{{test.test_name | titlecase}}</h6>
+            <small class="test-by colored">By {{test.faculty_name}}</small>
+        </div>
+        <div class="close" (click)="closeModal(false)">X</div>
+    </div>
+    <div class="ti-stats-container">
+        <div class="ti-stat stat-1">
+            <div class="stat-block">
+                <h1 class="stat-num m-0">{{test && (test.sections<10?'0'+test.sections:test.sections)}}</h1>
+                <div class="stat-label">Sections</div>
+            </div>
+            <div class="stat-block">
+                <h1 class="stat-num m-0">{{test && (test.questions<10?'0'+test.questions:test.questions)}}</h1>
+                <div class="stat-label">Questions</div>
+            </div>
+            <div class="stat-block">
+                <h1 class="stat-num m-0">{{test && (test.hours<10?'0'+test.hours:test.hours)}}</h1>
+                <div class="stat-label">Duration</div>
+            </div>
+            <div class="stat-block">
+                <h1 class="stat-num m-0">{{test && (test.marks<10?'0'+test.marks:test.marks)}}</h1>
+                <div class="stat-label">Marks</div>
+            </div>
+            <div class="stat-timer-block">
+                <div class="timer-heading">
+                    Time remaining
+                </div>
+                <h2 class="stat-timer">
+                    {{timeRemaining}}
+                </h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="ti-instructions">
+        <h6>Read the Information carefully before taking the test</h6>
+        {{test && test.instructions}}
+    </div>
+
+    <table class="ti-table table">
+        <thead>
+            <tr>
+                <th>Sections</th>
+                <th>Questions</th>
+                <th>Marks</th>
+                <th>Duration</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let part of testParts">
+                <td>{{part.part_name}}</td>
+                <td>{{part.questions}}</td>
+                <td>{{part.marks}}</td>
+                <td>{{part.duration?part.duration+'mins':''}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="start-container">
+        <button class="start-test">Start Test</button>
+    </div>
+</div>

@@ -1,0 +1,51 @@
+<p-toast position="bottom-right"></p-toast>
+<form class="form" [formGroup]="form">    
+    <div class="form-group">
+        <div class="form-input-label">Name</div>
+        <input class="form-item w-100" pInputText type="text" formControlName="name">
+        <small class="ng-error" *ngIf="form.controls.name.touched && form.controls.name.hasError('required')">Please fill this field.</small>
+    </div>
+    <div class="form-group">
+        <div class="form-input-label">USN</div>
+        <input class="form-item w-100" pInputText type="text" formControlName="usn">
+        <small class="ng-error" *ngIf="form.controls.usn.touched && form.controls.usn.hasError('required')">Please fill this field.</small>
+    </div>
+    <div class="form-group">
+        <div class="form-input-label">Email Address</div>
+        <input class="form-item w-100" pInputText type="email" formControlName="email">
+        <small class="ng-error" *ngIf="form.controls.email.touched && form.controls.email.hasError('required')">Please fill this field.</small>
+    </div>
+    <div class="form-group">
+        <div class="form-input-label">Mobile Number</div>
+        <input class="form-item w-100" pInputText type="number" formControlName="mobile">
+        <small class="ng-error" *ngIf="form.controls.mobile.touched && form.controls.mobile.hasError('required')">Please fill this field.</small>
+        <small class="ng-error" *ngIf="form.controls.mobile.touched && form.controls.mobile.hasError('pattern')">Invalid mobile number.</small>
+    </div>
+    <div class="form-group">
+        <div class="form-input-label">Branch</div>
+        <p-dropdown optionLabel="branch_name" optionValue="branch_id" [options]="branches" styleClass="w-100" formControlName="branch"></p-dropdown>    
+        <small class="ng-error" *ngIf="form.controls.branch.touched && form.controls.branch.hasError('required')">Please fill this field.</small>
+    </div>
+    <div class="form-group">
+        <div class="form-input-label">Semester</div>
+        <p-dropdown [options]="[1,2,3,4,5,6,7,8]" styleClass="w-100" formControlName="semester"></p-dropdown>    
+        <small class="ng-error" *ngIf="form.controls.semester.touched && form.controls.semester.hasError('required')">Please fill this field.</small>
+    </div>
+    <div class="form-group">
+        <div class="form-input-label">Password</div>
+        <input class="form-item w-100" pInputText type="password" formControlName="password">
+        <small class="ng-error" *ngIf="form.controls.password.touched && form.controls.password.hasError('required')">Please fill this field.</small>
+        <small class="ng-error" *ngIf="form.controls.password.touched && form.controls.password.hasError('pattern')">Weak password</small>
+    </div>
+    <div class="form-group">
+        <div class="form-input-label">Confirm Password</div>
+        <input class="form-item w-100" pInputText type="password" formControlName="cpassword">
+        <small class="ng-error" *ngIf="form.controls.cpassword.touched && form.controls.cpassword.hasError('required')">Please fill this field.</small>
+        <small class="ng-error" *ngIf="form.controls.cpassword.touched && invalidForm">Password didn't match.</small>
+    </div>
+    <div class="form-group">
+        <button class="btn w-100 button text-light py-2 d-grid mx-auto" (click)="onSubmit()" [disabled]="form.invalid">SIGN UP</button>
+    </div></form>
+<small class="d-block text-center mt-3">
+    Already have an account? <a class="colored text-decoration-none" routerLink="/auth">Sign In</a>
+</small>

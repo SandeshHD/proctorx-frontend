@@ -1,0 +1,69 @@
+@import '../../../../variables.scss';
+
+.statcard-container{
+    display: grid;
+    grid-template-columns: 1fr;
+    gap:2rem;
+    justify-content:center;
+}
+
+.block-container{
+    display:grid;
+    grid-template-columns: 1fr;
+    gap:30px;
+    .block-label{
+        font-size: 1.15rem;
+    }
+    .block{
+        background-color: $white-color;
+        border-radius: 5px;
+        padding:1.5rem;
+    }
+    .lb-container{
+        display:flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .leaderboard-table{
+        font-size: 0.9rem;
+        th{
+            font-weight: normal;
+            color: $light-dark;
+        }
+        td{
+            padding:20px 10px;
+        }
+    }
+    .more{
+        text-decoration: none;
+        color: $black-color;
+        display:flex;
+        cursor: pointer;
+        align-items: center
+    }
+    .recent-activities{
+        height: fit-content;
+    }
+}
+
+
+@media screen and (min-width: 768px) {
+    .statcard-container{
+        grid-template-columns: repeat(2,1fr);
+    }
+}
+
+@media screen and (min-width:998px) {
+    .block-container{
+        grid-template-columns: 40% auto;
+    }
+    .activities-container{
+        grid-template-columns: auto 35%;
+    }
+}
+
+@media screen and (min-width:1200px) {
+    .statcard-container{
+        grid-template-columns: repeat(4,1fr);
+    }
+}
