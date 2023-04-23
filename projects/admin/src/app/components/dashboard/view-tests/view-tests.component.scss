@@ -1,0 +1,61 @@
+@import '../../../../variables.scss';
+::ng-deep{
+    .p-dialog{
+        width: 90vw !important;
+    }
+    .p-dialog-content{
+        padding-top: 5px !important;
+    }
+    .p-button.p-button-icon-only{
+        padding:0.5rem 0;
+    }
+}
+.action{
+    cursor: pointer;
+    text-align: center;
+    .action-button{
+        font-size: 0.8em;
+    }
+    .result-button{
+        background-color: $secondary-color;
+        border:1px solid $secondary-color;
+    }
+}
+.options-section{
+    width:50%;
+    .option-area{
+        display: flex;
+        gap:20px;
+        align-items: center;
+        position:relative;
+        margin-bottom: 15px;
+    }
+    .option{
+        width:100%;
+        display: flex;
+        background-color:#ffffff;
+        padding:1em 0.8em;
+        outline:2px solid #dee2e6;
+        cursor: pointer;
+        border-radius: 5px;
+        label{
+            font-size: 0.85rem;
+            margin-left:10px;
+        }
+        &:has(> input[type="radio"]:checked){
+            outline:2px solid $primary-color;
+        }
+        input[type="radio"]{
+            width: 20px;
+            height: 20px;
+            accent-color:$primary-color;
+        }
+    }
+    .right-answer{
+        display: none;
+        color:#426F61;
+        font-size: 1.5rem;
+        position:absolute;
+        right:-45px;
+    }
+}

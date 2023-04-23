@@ -1,0 +1,19 @@
+<div class="dashboard-container">
+    <div class="sidebar py-4 px-4">
+        <h5 class="brand mb-3 text-center">Proctor <span class="colored">X</span></h5>
+        <hr>
+        <div class="sidebar-links mt-3">
+            <a class="sidebar-link py-3" routerLink="view-tests">
+                <i class="pi pi-book link-icon"></i>
+                <div class="link-label">View Tests</div>
+            </a>
+            <a class="sidebar-link py-3" routerLink="create-test">
+                <i class="pi pi-book link-icon"></i>
+                <div class="link-label">Create Tests</div>
+            </a>
+        </div>
+    </div>
+    <div class="dashboard-area p-4">
+        <router-outlet></router-outlet>
+    </div>
+</div>

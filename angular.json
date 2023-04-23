@@ -37,8 +37,7 @@
               "node_modules/primeng/resources/primeng.min.css"
             ],
             "scripts": [
-              "./node_modules/chart.js/dist/chart.js",
-              "./node_modules/date-and-time/date-and-time.js"
+              "./node_modules/chart.js/dist/chart.js"
             ]
           },
           "configurations": {
@@ -138,9 +137,14 @@
             ],
             "styles": [
               "projects/admin/src/styles.scss",
-              "node_modules/bootstrap/dist/css/bootstrap.min.css"
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/primeicons/primeicons.css",
+              "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
+              "node_modules/primeng/resources/primeng.min.css"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/chart.js/dist/chart.js"
+            ]
           },
           "configurations": {
             "production": {
