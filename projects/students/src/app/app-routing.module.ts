@@ -6,10 +6,10 @@ import { SignupComponent } from './components/auth/signup/signup.component';
 import { AnalyticsComponent } from './components/dashboard/analytics/analytics.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TestsComponent } from './components/dashboard/tests/tests.component';
+import { SubmissionComponent } from './components/submission/submission.component';
 import { TestWindowComponent } from './components/test-window/test-window.component';
 
 const routes: Routes = [
-  // {path:'',component:}
   {
     path: 'auth',
     component: AuthComponent,
@@ -17,6 +17,10 @@ const routes: Routes = [
       { path: '', component: LoginComponent, pathMatch: 'full' },
       { path: 'signup', component: SignupComponent },
     ],
+  },
+  {
+    path: 'submission',
+    component: SubmissionComponent,
   },
   {
     path: '',
@@ -27,7 +31,7 @@ const routes: Routes = [
     ],
   },
   {
-    path:'test',
+    path:'test/:id',
     component:TestWindowComponent
   }
 ];

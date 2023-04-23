@@ -10,7 +10,7 @@ import {DropdownModule} from 'primeng/dropdown';
 import {InputTextModule} from 'primeng/inputtext';
 import {InputNumberModule} from 'primeng/inputnumber';
 import { ToastModule } from 'primeng/toast';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TestsComponent } from './components/dashboard/tests/tests.component';
@@ -23,6 +23,9 @@ import { ActivityComponent } from './components/dashboard/analytics/activity/act
 import { TestInfoComponent } from './components/dashboard/tests/test-info/test-info.component';
 import { TestWindowComponent } from './components/test-window/test-window.component';
 import { MessageService } from 'primeng/api';
+import { QuestionComponent } from './components/test-window/question/question.component';
+import { MenuModule } from 'primeng/menu';
+import { SubmissionComponent } from './components/submission/submission.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,6 +40,8 @@ import { MessageService } from 'primeng/api';
     ActivityComponent,
     TestInfoComponent,
     TestWindowComponent,
+    QuestionComponent,
+    SubmissionComponent,
   ],
   imports: [
     BrowserModule,
@@ -50,6 +55,8 @@ import { MessageService } from 'primeng/api';
     InputNumberModule,
     TableModule,
     ChartModule,
+    FormsModule,
+    MenuModule
   ],
   providers: [MessageService],
   bootstrap: [AppComponent]

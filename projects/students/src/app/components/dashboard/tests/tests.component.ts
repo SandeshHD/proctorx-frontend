@@ -26,7 +26,7 @@ export class TestsComponent {
       this.tests = data
     },err=>{
       if(err.status === 404){
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Invalid credentials' })
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Not found' })
       }else if(err.status === 400){
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Bad Request' })
       }
@@ -41,7 +41,7 @@ export class TestsComponent {
       this.attendedTests = data
     },err=>{
       if(err.status === 404){
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Invalid credentials' })
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Not found' })
       }else if(err.status === 400){
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Bad Request' })
       }

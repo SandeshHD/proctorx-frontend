@@ -10,8 +10,9 @@ export class DashboardService {
   constructor(private http: HttpClient) { }
 
   getUpcomingTests(){
+    let usn = JSON.parse(localStorage.getItem('userInfo')||'{}').usn
     let branch_id = JSON.parse(localStorage.getItem('userInfo')||'{}').branch
-    return this.http.get<any>(URLS.BASE_URL + '/read/upcomingTests?branch_id='+branch_id);
+    return this.http.get<any>(URLS.BASE_URL + '/read/upcomingTests?branch_id='+branch_id+'&usn='+usn);
   }
   
   getTestParts(test_id: number){
@@ -40,5 +41,9 @@ export class DashboardService {
   getNoticeBoard(){
     return this.http.get<any>(URLS.BASE_URL + '/read/noticeboard');  
   }
-
+  
+  startTest(body:any){
+    body['user_id'] = JSON.parse(localStorage.getItem('userInfo')||'{}').usn
+    return this.http.post<any>(URLS.BASE_URL + '/create/start_test',body);  
+  }
 }

@@ -1,0 +1,137 @@
+@import '../../../../variables.scss';
+.question{
+    font-weight: normal;
+    font-size: 0.8rem;
+    color:$black-color;
+    line-height: 25px;
+}
+
+.question-section{
+    border-right: 2px solid #dcdcdc;
+    min-height: 90vh;
+}
+
+.question-number{
+    color:$primary-color;
+}
+
+#countdown {
+    position: relative;
+    margin: auto;
+    height: 40px;
+    width: 40px;
+    transform: scale(0.8);
+    text-align: center;
+  }
+  
+  #countdown-number {
+    color: $primary-color;
+    display: inline-block;
+    line-height: 40px;
+  }
+  
+  svg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    transform: rotateY(-180deg) rotateZ(-90deg);
+  }
+  
+  svg circle {
+    stroke-dasharray: 113px;
+    stroke-dashoffset: 0px;
+    stroke-linecap: round;
+    stroke-width: 3px;
+    stroke: $primary-color;
+    fill: none;
+    // animation: countdown 60s linear infinite forwards;
+
+  }
+  
+.options-section{
+    display: grid;
+    grid-template-rows:90% 10%;
+    border-right: 2px solid #dcdcdc;
+    .option{
+        width:100%;
+        display: flex;
+        background-color:#ffffff;
+        padding:1em 0.8em;
+        cursor: pointer;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        label{
+            font-size: 0.85rem;
+            margin-left:10px;
+        }
+        &:has(> input[type="radio"]:checked){
+            outline:2px solid $primary-color;
+        }
+        input[type="radio"]{
+            width: 20px;
+            height: 20px;
+            accent-color:$primary-color;
+        }
+    }
+}
+
+.next{
+    border-top: 2px solid #dcdcdc;
+    .next-button{
+        background-color: $primary-color;
+        color:$white-color;
+        float:right;
+        &.skip{
+            background-color: $red-color;
+        }
+    }
+    
+}
+
+
+.questions-list{
+    display: flex;
+    gap:15px 25px;
+    flex-wrap: wrap;
+    .question{
+        width:35px;
+        height:35px;
+        border:none;
+        background-color: #ffffff;
+        border-radius: 5px;
+        &.done{
+            color:$white-color;
+            background-color: $primary-color;
+        }
+        &.missed{
+            background-color: $red-color;
+            color:$white-color;
+        }
+        &.current{
+            background-color: $secondary-color;
+            color:$white-color;
+        }
+    }
+}
+
+.questions-status{
+    padding-bottom: 30px;
+    border-bottom: 2px solid #dcdcdc;
+}
+.summery{
+    font-size: 0.85rem;
+    color:$black-color;
+    font-weight: 400;
+    margin-bottom: 25px;
+}
+
+  @keyframes countdown {
+    from {
+      stroke-dashoffset: 0px;
+    }
+    to {
+      stroke-dashoffset: 113px;
+    }
+  }

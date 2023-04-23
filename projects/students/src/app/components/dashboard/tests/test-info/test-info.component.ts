@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output} from '@angular/core';
+import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { DashboardService } from '../../dashboard.service';
 @Component({
@@ -13,25 +14,25 @@ export class TestInfoComponent {
   testParts:any;
   timeRemaining:any="00d:00h:00m:00s";
   timer:any;
-  constructor(private dashboardService:DashboardService,private messageService:MessageService){}
+  constructor(private dashboardService:DashboardService,private messageService:MessageService,private router:Router){}
   closeModal(refresh:boolean){
     clearInterval(this.timer)
     this.onModalClose.emit(refresh);
   }
   ngOnInit(){
     this.countdownTimeStart(this.test.deadline)
-    this.dashboardService.getTestParts(this.test.test_id).subscribe((data:any)=>{
-      this.testParts = data
-    },(err)=>{
-      if(err.status === 404){
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Test not found' })
-      }else if(err.status === 400){
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Bad Request' })
-      }
-      else{
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Internal Server Error' })
-      }
-    })
+    // this.dashboardService.getTestParts(this.test.test_id).subscribe((data:any)=>{
+    //   this.testParts = data
+    // },(err)=>{
+    //   if(err.status === 404){
+    //     this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Test not found' })
+    //   }else if(err.status === 400){
+    //     this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Bad Request' })
+    //   }
+    //   else{
+    //     this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Internal Server Error' })
+    //   }
+    // })
   }
 
   countdownTimeStart(deadline:any){
@@ -58,5 +59,15 @@ export class TestInfoComponent {
         + r.minute + "m: " + r.second + "s ";
         
     }, 1000);
+    }
+
+    startTest(id:any){
+      const body = {
+        test_id : id
+      }
+      this.dashboardService.startTest(body).subscribe((response:any)=>{
+        console.log(response)
+        this.router.navigate(['/test',id])
+      })
     }
 }

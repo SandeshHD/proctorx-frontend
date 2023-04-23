@@ -7,8 +7,8 @@
             <div class="info-desc">Sections</div>
         </div>
         <div class="info-block d-flex flex-column align-items-end">
-            <h5>{{test.hours<10?'0'+test.hours:test.hours}}</h5>
-            <div class="info-desc ">Hours</div>
+            <h5>{{test.duration/60<10?'0'+test.duration/60:test.duration/60}}</h5>
+            <div class="info-desc ">Minutes</div>
         </div>
         <div class="info-block">
             <h5>{{test.questions<10?'0'+test.questions:test.questions}}</h5>

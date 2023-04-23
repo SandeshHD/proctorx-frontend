@@ -1,0 +1,14 @@
+@import '../../../variables.scss';
+.submission{
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    text-align:center;
+    border-radius: 10px;
+    .btn{
+        background-color: $primary-color;
+        color:white;
+    }
+}
