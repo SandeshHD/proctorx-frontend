@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output} from '@angular/core';
+import { Component} from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng/api';
@@ -18,6 +18,7 @@ export class QuestionComponent {
   answeredQuestions = 0;
   savedInServer = 0;
   options:any;
+  testId!:number;
   tests:any;
   totalQuestions:number = 0
   questionsStatus:any=[];
@@ -30,9 +31,12 @@ export class QuestionComponent {
     this.answerForm = new FormGroup({
       "user_id": new FormControl(this.usn),
       "question_id": new FormControl(),
+      "test_id": new FormControl(),
       "answer":new FormControl(null),
     })
     this.activatedRoute.params.subscribe(params=>{
+      this.testId = params['id']
+      this.answerForm.controls['test_id'].setValue(this.testId)
       this.testWindowService.getTestData(params['id']).subscribe(response =>{
         this.tests = response
         this.totalQuestions = this.tests.length
@@ -82,7 +86,7 @@ export class QuestionComponent {
       },1000)
       this.question = this.tests[this.currentIndex] 
       this.options = this.question?.option_set.split(',')
-      this.answerForm.patchValue({user_id:this.usn,question_id:this.question.question_id})   
+      this.answerForm.patchValue({user_id:this.usn,question_id:this.question.question_id,test_id:this.testId})   
     }else{
       this.timeLeft = 0
     }

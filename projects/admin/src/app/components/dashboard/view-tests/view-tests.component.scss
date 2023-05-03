@@ -1,15 +1,4 @@
 @import '../../../../variables.scss';
-::ng-deep{
-    .p-dialog{
-        width: 90vw !important;
-    }
-    .p-dialog-content{
-        padding-top: 5px !important;
-    }
-    .p-button.p-button-icon-only{
-        padding:0.5rem 0;
-    }
-}
 .action{
     cursor: pointer;
     text-align: center;

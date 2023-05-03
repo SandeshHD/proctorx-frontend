@@ -3,6 +3,8 @@
     display: grid;
     grid-template-columns: 20% 80%;
     .sidebar{
+        position: sticky;
+        top: 0;
         background-color: $white-color;
         height: 100vh;
         .sidebar-links{
@@ -15,5 +17,17 @@
                 cursor: pointer;
             }
         }
+    }
+}
+
+::ng-deep{
+    .p-dialog{
+        width: 90vw !important;
+    }
+    .p-dialog-content{
+        padding-top: 5px !important;
+    }
+    .p-button.p-button-icon-only{
+        padding:0.5rem 0;
     }
 }

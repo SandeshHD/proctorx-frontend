@@ -18,8 +18,8 @@
                 <div class="stat-label">Questions</div>
             </div>
             <div class="stat-block">
-                <h1 class="stat-num m-0">{{test && (test.duration<10?'0'+test.duration:test.duration)}}</h1>
-                <div class="stat-label">Duration</div>
+                <h1 class="stat-num m-0">{{test && (test.duration<10?'0'+test.duration/60:test.duration/60)}}</h1>
+                <div class="stat-label">Duration (Minutes)</div>
             </div>
             <div class="stat-block">
                 <h1 class="stat-num m-0">{{test && (test.marks<10?'0'+test.marks:test.marks)}}</h1>
@@ -38,7 +38,15 @@
 
     <div class="ti-instructions">
         <h6>Read the Information carefully before taking the test</h6>
-        {{test && test.instructions}}
+        <ol>
+            <li>Make sure you have a stable internet connection and a reliable device to take the test on.</li>
+            <li>Find a quiet, distraction-free environment to take the test in. This will help you focus and avoid any unnecessary interruptions.</li>
+            <li>Read all instructions and questions carefully before answering. Make sure you understand what is being asked of you.</li>
+            <li>Keep track of the time limit and pace yourself accordingly. Try to allocate an appropriate amount of time for each question.</li>
+            <li>Double-check your work before submitting the test. Make sure you have answered all questions and have not left anything blank.</li>
+            <li>After submitting, wait for confirmation that your test has been received and processed. If you encounter any issues or have questions, contact the test administrator as soon as possible.</li>
+        </ol>
+    
     </div>
 
     <!-- <table class="ti-table table">
@@ -60,6 +68,6 @@
         </tbody>
     </table> -->
     <div class="start-container">
-        <button class="start-test" (click)="startTest(test.test_id)">Start Test</button>
+        <button class="start-test" (click)="startTest(test.id)">Start Test</button>
     </div>
 </div>

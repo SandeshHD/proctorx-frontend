@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Component, HostListener, Inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { DashboardService } from '../dashboard/dashboard.service';
@@ -18,7 +19,10 @@ export class TestWindowComponent {
   timeLeft:any=0;
   timer:any;
   timeString = '00:00:00'
-  constructor(private testWindowService:TestWindowService, private activatedRoute:ActivatedRoute,private router:Router,private messageService:MessageService){}
+  constructor(private testWindowService:TestWindowService, private activatedRoute:ActivatedRoute,private router:Router,private messageService:MessageService,@Inject(DOCUMENT) private document: any){}
+  @HostListener("document:fullscreenchange", []) fullScreen() {
+    console.log("changed")
+  }
 
   ngOnInit(){
     this.activatedRoute.params.subscribe(params=>{

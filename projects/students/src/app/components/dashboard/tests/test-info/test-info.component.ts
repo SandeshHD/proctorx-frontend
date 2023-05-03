@@ -14,6 +14,7 @@ export class TestInfoComponent {
   testParts:any;
   timeRemaining:any="00d:00h:00m:00s";
   timer:any;
+  elem: any;
   constructor(private dashboardService:DashboardService,private messageService:MessageService,private router:Router){}
   closeModal(refresh:boolean){
     clearInterval(this.timer)
@@ -21,6 +22,7 @@ export class TestInfoComponent {
   }
   ngOnInit(){
     this.countdownTimeStart(this.test.deadline)
+    this.elem = document.documentElement;
     // this.dashboardService.getTestParts(this.test.test_id).subscribe((data:any)=>{
     //   this.testParts = data
     // },(err)=>{
@@ -61,10 +63,26 @@ export class TestInfoComponent {
     }, 1000);
     }
 
+    openFullscreen() {
+      if (this.elem.requestFullscreen) {
+        this.elem.requestFullscreen();
+      } else if (this.elem.mozRequestFullScreen) {
+        /* Firefox */
+        this.elem.mozRequestFullScreen();
+      } else if (this.elem.webkitRequestFullscreen) {
+        /* Chrome, Safari and Opera */
+        this.elem.webkitRequestFullscreen();
+      } else if (this.elem.msRequestFullscreen) {
+        /* IE/Edge */
+        this.elem.msRequestFullscreen();
+      }
+    }
+
     startTest(id:any){
       const body = {
         test_id : id
       }
+      this.openFullscreen()
       this.dashboardService.startTest(body).subscribe((response:any)=>{
         console.log(response)
         this.router.navigate(['/test',id])

@@ -1,0 +1,8 @@
+tr th:last-child, tr td:last-child {
+    text-align: right;
+}
+::ng-deep{
+    .p-dialog.question{
+        width: 500px !important;
+    }
+}

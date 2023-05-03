@@ -27,10 +27,8 @@
                 <th>Test Name</th>
                 <th>Faculty</th>
                 <th>Date</th>
-                <th>Sections</th>
                 <th>Maximum Score</th>
                 <th>Your Score</th>
-                <th>Action</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-test>
@@ -38,14 +36,10 @@
                 <td>{{test.id}}</td>
                 <td>{{test.test_name}}</td>
                 <td>{{test.name}}</td>
-                <td>{{test.attended_data|date}}</td>
-                <td>{{test.sections}}</td>
+                <td>{{test.attended_date|date}}</td>
                 <td>{{test.marks}}</td>
                 <td>{{test.score}}</td>
-                <td>Action</td>
             </tr>
         </ng-template>
     </p-table>
-    
-    
 </div>

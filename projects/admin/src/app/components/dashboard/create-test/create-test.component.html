@@ -1,1 +1,166 @@
-<p>create-test works!</p>
+<p-dialog header="Add question" [(visible)]="visible" [modal]="true" [draggable]="false" styleClass="question" [resizable]="false">
+    <form [formGroup]="form" class="question-form">
+        <div class="row align-items-end px-3 pb-4">
+            <label for="q-title" class="form-label p-0">Question Title</label>
+            <textarea pInputText type="text" formControlName="question_title" style="resize:none;" [rows]="5"></textarea>
+        </div>
+        <div class="row align-items-end px-3 pb-4">
+            <div class="d-flex align-items-center p-0 justify-content-between">
+                <label for="q-options" class="form-label p-0 m-0">Options</label>
+                <button class="py-2 px-3 add-option-btn" pButton label="Add Option" (click)="addOption()"></button>
+            </div>
+            <div class="row align-items-center mt-3 justify-content-between px-3 py-0 gap-2" formGroupName="option_set" *ngFor="let option of optionSet.controls; let i=index">
+                <div class="col-10 p-0">
+                    <input type="text" class="w-100" pInputText [formControlName]="i" [placeholder]="'Option '+(i+1)">
+                </div>
+                <div class="col-1 p-0">
+                    <button class="p-button-danger" pButton icon="pi pi-minus" (click)="deleteOption(i)"></button>
+                </div>
+            </div>
+        </div>
+        <div class="row align-items-end px-3 pb-4 gap-1 justify-content-between">
+            <div class="col-8 flex-column px-0">
+                <label for="q-title" class="form-label p-0">Correct Answer</label>
+                <p-dropdown [autoDisplayFirst]="false" [options]="form.controls['option_set'].value" styleClass="w-100" formControlName="correct_answer" appendTo="body"></p-dropdown>            
+            </div>
+            <div class="col-3 px-0 align-items-center">
+                <label for="q-title" class="form-label p-0">Points</label>
+                <input type="number" [min]="0" [max]="200" class="w-100" pInputText formControlName="points">
+            </div>
+        </div>
+        <div class="row align-items-end px-3 pb-4 gap-1 justify-content-between">
+            <div class="col-8 flex-column px-0">
+                <label for="q-title" class="form-label p-0">Difficulty</label>
+                <p-dropdown [autoDisplayFirst]="false" [options]="difficulty" styleClass="w-100" formControlName="difficulty_level" ppendTo="body"></p-dropdown>            
+            </div>
+            <div class="col-3 px-0 align-items-center">
+                <label for="q-title" class="form-label p-0">Time Limit</label>
+                <input type="number" [min]="0" [max]="200" class="w-100" pInputText formControlName="time_limit">
+            </div>
+        </div>
+        <div class="row align-items-end px-3 pb-4">
+            <div class="d-flex align-items-center p-0 justify-content-between">
+                <label for="q-options" class="form-label p-0 m-0">Topics</label>
+                <button class="py-2 px-3 add-option-btn" pButton label="Add Topic" (click)="addTopic()"></button>
+            </div>
+            <div class="row align-items-center mt-3 justify-content-between px-3 py-0 gap-2" formGroupName="topics" *ngFor="let topic of topicSet.controls; let i=index">
+                <div class="col-10 p-0">
+                    <p-dropdown [autoDisplayFirst]="false" [autoDisplayFirst]="false" [options]="topics" optionLabel="topic_name" optionValue="topic_id" styleClass="w-100" [formControlName]="i" appendTo="body"></p-dropdown>            
+                </div>
+                <div class="col-1 p-0">
+                    <button class="p-button-danger" pButton icon="pi pi-minus" (click)="deleteTopic(i)"></button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row px-3">
+            <button class="py-2" label="Save Question" pButton (click)="submitForm()"></button>
+        </div>
+    </form>
+</p-dialog>
+
+<p-dialog header="Select question" [(visible)]="selectQuestion" [modal]="true" [draggable]="false" [resizable]="false">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="d-flex gap-2 align-items-center">
+            <div class="label">Select Tag</div>
+            <p-dropdown [options]="topicSetFilter" (onChange)="changeFilter($event)" optionLabel="topic_name" optionValue="topic_id" appendTo="body"></p-dropdown>
+        </div>
+        <div class="d-flex gap-2 align-items-center">
+            <div class="label">Search:</div>
+            <input type="text" pInputText (input)="searchQuestion($event)"/>
+        </div>
+    </div>
+    <p-table #table [value]="questions" styleClass="mb-5" [rows]="5" [totalRecords]="totalRecords" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]" [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [lazy]="true" (onLazyLoad)="paginationHandler($event)">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>ID</th>
+                <th>Question</th>
+                <th>Action</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-question let-index="rowIndex">
+            <tr>
+                <td>{{index+1}}</td>
+                <td>{{question.question_title}}</td>
+                
+                <td class="d-flex gap-3 justify-content-end">
+                    <button pButton icon="pi pi-plus" (click)="addQuestion(question)" class="btn p-button-success action-button" pTooltip="Add question" tooltipPosition="left" appendTo="body" ></button>
+                    <!-- (click)="openStudentDetails(test.usn)" -->
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</p-dialog>
+
+<div class="dashboard-right">
+    <div class="dashboard-heading d-flex justify-content-between align-items-center mb-4">
+        <h5 class="header m-0">Create Test</h5>
+        <div class="d-flex gap-2 align-items-center">
+            <div class="d-flex gap-2 align-items-center">
+                <button pButton label="Create Question" class="btn action-button" tooltipPosition="left" appendTo="body" (click)="openQuestion()"></button>
+                <button pButton label="Save Test" class="btn action-button p-button-success" tooltipPosition="left" appendTo="body" (click)="submitTest()"></button>
+            </div>
+        </div>
+    </div>
+    <form class="test-form" [formGroup]="testForm" class="mb-3">
+        <div class="d-flex w-100 justify-content-between">
+            <div>
+                <input type="text" formControlName="test_name" class="d-block" pInputText placeholder="Test name"/>
+                <small class="ng-error text-danger" *ngIf="testForm?.controls['test_name'].touched && testForm.controls['test_name'].hasError('required')">Please fill this field.</small>
+            </div>
+            <div class="d-flex flex-column">
+                <p-calendar formControlName="deadline" [showTime]="true" [showSeconds]="true" placeholder="Deadline" appendTo="body" [minDate]="today"></p-calendar>
+                <small class="ng-error text-danger" *ngIf="testForm?.controls['deadline'].touched && testForm.controls['test_name'].hasError('required')">Please fill this field.</small>
+            </div>
+        </div>
+    </form>
+    <div class="question-area">
+        <p-panel *ngFor="let question of questionsList;let idx = index;" styleClass="mb-3" >
+            <ng-template pTemplate="header">
+                <div class="d-flex justify-content-between w-100 align-items-center">
+                    <div class="question-text">
+                        {{question.question_title}}
+                    </div>
+                    <button pButton class="btn p-button-danger action-button delete-button" icon="pi pi-trash" tooltipPosition="left" appendTo="body" (click)="removeQuestion(idx)"></button>
+                </div>
+            </ng-template>
+            <div class="options-section">
+                <div class="options">
+                    <div class="option-area" *ngFor="let option of question.option_set.split(',')">
+                        <label class="option" >
+                            <input type="radio" name="answer" [value]="option" [id]="option" class="option-label" [checked]="option===question.correct_answer?'checked':''" [disabled]="option!==question.correct_answer?true:false">
+                            <label class="option-label" [for]="option">{{option | titlecase}}</label>
+                        </label>
+                        <i class="pi pi-check right-answer" [ngClass]="{'d-block':option===question.correct_answer}"></i>
+                    </div>
+                </div>  
+                <div class="question-info">
+                    <h6 class="mb-3">Question Info</h6>
+                    <table class="w-100 table question-info-table">
+                        <tr>
+                            <td>Points</td>
+                            <td>{{question.points}}</td>
+                        </tr>
+                        <tr>
+                            <td>Difficulty Level</td>
+                            <td>{{question.difficulty_level}}</td>
+                        </tr>
+                        <tr>
+                            <td>Time Limit</td>
+                            <td>{{question.time_limit}}</td>
+                        </tr>
+                        <tr>
+                            <td>Created By</td>
+                            <td>{{question.name}}</td>
+                        </tr>
+                    </table>
+                </div>          
+            </div>
+        </p-panel>
+        <div class="add-question p-4 text-center" (click)="openSelectQuestion()">
+            Click to add question to test
+        </div>
+    </div>
+</div>
+
+<p-toast></p-toast>

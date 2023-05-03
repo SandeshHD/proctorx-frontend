@@ -24,6 +24,10 @@ import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { ChartModule } from 'primeng/chart';
+import { ChipModule } from 'primeng/chip';
+import { PanelModule } from 'primeng/panel';
+import { CalendarModule } from 'primeng/calendar';
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,7 +55,11 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
     DialogModule,
     AccordionModule,
     ConfirmPopupModule,
-    OverlayPanelModule
+    OverlayPanelModule,
+    PanelModule,
+    ChartModule,
+    ChipModule,
+    CalendarModule
   ],
   providers: [MessageService,ConfirmationService],
   bootstrap: [AppComponent]

@@ -1,1 +1,97 @@
-<p>view-students works!</p>
+<p-dialog header="Student Information" [(visible)]="visible" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
+    <div class="no-records text-center" *ngIf="topicCount===0 && performanceCount===0">No Data found</div>
+    <div class="stat-container" *ngIf="topicCount>0 && performanceCount>0">
+        <div class="block pie-chart">
+            <h6 class="block-label mb-3">Skill Division</h6>
+            <p-chart type="doughnut" [data]="topicScore" [options]="skillsOptions"></p-chart>
+        </div>
+        <div class="block line-chart">
+            <h6 class="block-label mb-4">Performance</h6>
+            <p-chart type="line" [data]="performance" [options]="performanceOptions" styleClass="h-100"></p-chart>
+        </div>
+    </div>
+    <div class="row my-4">
+        <h5 class="my-3 dashboard-heading">Attended tests</h5>
+        <p-table #dt1 [value]="attendedTests" styleClass="mb-5" [rows]="5" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]"
+        [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [globalFilterFields]="['name','faculty','date']">
+        <ng-template pTemplate="caption">
+            <div class="flex">
+                <span class="p-input-icon-left ml-auto">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="applyFilterGlobal($event, 'contains')" placeholder="Search keyword" />
+                </span>
+            </div>
+        </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>ID</th>
+                    <th>Test Name</th>
+                    <th>Faculty</th>
+                    <th>Date</th>
+                    <th>Sections</th>
+                    <th>Maximum Score</th>
+                    <th>Your Score</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-test>
+                <tr>
+                    <td>{{test.id}}</td>
+                    <td>{{test.test_name}}</td>
+                    <td>{{test.name}}</td>
+                    <td>{{test.attended_data|date}}</td>
+                    <td>{{test.sections}}</td>
+                    <td>{{test.marks}}</td>
+                    <td>{{test.score}}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</p-dialog>
+<div class="dashboard-right">
+    <div class="dashboard-heading d-flex justify-content-between align-items-center mb-4">
+        <h5 class="header m-0">View Students</h5>
+        <div class="d-flex gap-2 align-items-center">
+            <div class="d-flex gap-2 align-items-center">
+                <div class="label">Semester:</div>
+                <p-dropdown [options]="semester" (onChange)="changeFilter($event)"></p-dropdown>
+            </div>
+            <div class="d-flex gap-2 align-items-center">
+                <div class="label">Search:</div>
+                <input type="text" pInputText (input)="searchStudent($event)"/>
+            </div>
+        </div>
+    </div>
+    <p-table #table [value]="students" styleClass="mb-5" [rows]="5" [totalRecords]="totalRecords" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]" [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [lazy]="true" (onLazyLoad)="paginationHandler($event)">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>ID</th>
+                <th>USN</th>
+                <th>Student Name</th>
+                <th>Email</th>
+                <th>Semester</th>
+                <th>Tests Attended</th>
+                <th>Tests Missed</th>
+                <th>Total Score</th>
+                <th>Action</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-student let-index="rowIndex">
+            <tr>
+                <td>{{index+1}}</td>
+                <td>{{student.usn}}</td>
+                <td>{{student.name}}</td>
+                <td>{{student.email}}</td>
+                <td>{{student.semester}}</td>
+                <td>{{student.tests_attended}}</td>
+                <td>{{student.tests_missed}}</td>
+                <td>{{student.total_score}}</td>
+                <td>
+                    <button pButton icon="pi pi-eye" class="btn action-button" pTooltip="View" tooltipPosition="left" appendTo="body" (click)="openStudentDetails(student.usn)"></button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<p-toast></p-toast>

@@ -42,7 +42,7 @@
                 <td>{{student.attended_date|date}}</td>
                 <td>{{student.marks}}</td>
                 <td>{{student.score}}</td>
-                <td>{{student.time_taken}}</td>
+                <td>{{student.time_taken/60}}</td>
             </tr>
         </ng-template>
     </p-table>
@@ -52,11 +52,17 @@
     <div class="dashboard-heading d-flex justify-content-between align-items-center mb-4">
         <h5 class="header m-0">View Tests</h5>
         <div class="d-flex gap-2 align-items-center">
-            <div class="label">Show:</div>
-            <p-dropdown [options]="status" (onChange)="changeFilter($event)"></p-dropdown>
+            <div class="d-flex gap-2 align-items-center">
+                <div class="label">Show:</div>
+                <p-dropdown [options]="status" (onChange)="changeFilter($event)"></p-dropdown>
+            </div>    
+            <div class="d-flex gap-2 align-items-center">
+                <div class="label">Search:</div>
+                <input type="text" pInputText (input)="searchTest($event)"/>
+            </div>
         </div>
     </div>
-    <p-table [value]="tests" styleClass="mb-5" [rows]="10" [totalRecords]="totalRecords" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [lazy]="true" (onLazyLoad)="paginationHandler($event)">
+    <p-table #table [value]="tests" styleClass="mb-5" [rows]="5" [totalRecords]="totalRecords" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [lazy]="true" (onLazyLoad)="paginationHandler($event)">
         <ng-template pTemplate="header">
             <tr>
                 <th>ID</th>
@@ -79,7 +85,7 @@
                 <td><p-tag styleClass="px-3" role="button" [severity]="test.status==='enabled'?'danger':'success'" [value]="test.status==='enabled'?'Disable':'Enable'" (click)="changeStatus(test)"></p-tag></td>
                 <td>{{test.deadline|date}}</td>
                 <td class="action d-flex gap-2">
-                    <button pButton icon="pi pi-pencil" class="btn action-button" pTooltip="Edit" tooltipPosition="left" appendTo="body"></button>
+                    <button pButton icon="pi pi-pencil" class="btn action-button" pTooltip="Edit" tooltipPosition="left" (click)="editTest(test.id)" appendTo="body"></button>
                     <button pButton icon="pi pi-eye" class="btn p-button-success action-button" (click)="showTest(test)" pTooltip="View answers" tooltipPosition="left" appendTo="body"></button>
                     <button pButton icon="pi pi-check-square" class="btn result-button result-button" (click)="showResult($event,test)" pTooltip="View Results" tooltipPosition="left" appendTo="body"></button>
                     <p-toast></p-toast>
@@ -89,3 +95,5 @@
         </ng-template>
     </p-table>
 </div>
+
+<p-toast></p-toast>
