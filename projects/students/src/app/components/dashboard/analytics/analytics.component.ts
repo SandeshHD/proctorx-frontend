@@ -63,6 +63,8 @@ export class AnalyticsComponent {
           grid: {
             color: '#ebedef',
           },
+          beginAtZero:true,
+          max:100
         },
       },
     };
@@ -72,7 +74,7 @@ export class AnalyticsComponent {
     this.dashboardService.getAttendedTests().subscribe((data:any)=>{
       // this.attendedTests = data
       const labels = data.map((test:any) => test.test_name)
-      const score = data.map((test:any) => test.score)
+      const score = data.map((test:any) => (test.score/test.marks)*100)
       this.performance = {
         labels: labels,
         datasets: [

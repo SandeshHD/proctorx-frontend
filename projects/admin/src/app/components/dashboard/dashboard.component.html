@@ -3,21 +3,25 @@
         <h5 class="brand mb-3">Proctor <span class="colored">X</span></h5>
         <hr>
         <div class="sidebar-links mt-3">
-            <a class="sidebar-link py-3" routerLink="">
+            <a class="sidebar-link py-3" routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
                 <i class="pi pi-book link-icon"></i>
                 <div class="link-label">View Tests</div>
             </a>
-            <a class="sidebar-link py-3" routerLink="view-students">
-                <i class="pi pi-book link-icon"></i>
+            <a class="sidebar-link py-3" routerLink="view-students" routerLinkActive="active">
+                <i class="pi pi-user link-icon"></i>
                 <div class="link-label">Students</div>
             </a>
-            <a class="sidebar-link py-3" routerLink="create-test">
-                <i class="pi pi-book link-icon"></i>
+            <a class="sidebar-link py-3" routerLink="create-test" routerLinkActive="active">
+                <i class="pi pi-calendar-plus link-icon"></i>
                 <div class="link-label">Create Tests</div>
             </a>
-            <a class="sidebar-link py-3" routerLink="questions">
-                <i class="pi pi-book link-icon"></i>
+            <a class="sidebar-link py-3" routerLink="questions" routerLinkActive="active">
+                <i class="pi pi-clone link-icon"></i>
                 <div class="link-label">Questions</div>
+            </a>
+            <a class="sidebar-link py-3" (click)="logout()">
+                <i class="pi pi-sign-out link-icon"></i>
+                <div class="link-label">Logout</div>
             </a>
         </div>
     </div>

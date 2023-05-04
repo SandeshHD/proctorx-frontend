@@ -65,6 +65,6 @@ export class TestsComponent {
   }
 
   openModal(id:any){
-    this.testShow = this.tests.find((test:any) => test.test_id === id); 
+    this.testShow = this.tests.find((test:any) => test.id === id); 
   }
 }

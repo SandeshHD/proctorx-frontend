@@ -93,7 +93,7 @@ export class ViewStudentsComponent {
           },
           grid: {
             color: '#ebedef',
-          },
+          }
         },
         y: {
           beginAtZero:true,
@@ -103,6 +103,7 @@ export class ViewStudentsComponent {
           grid: {
             color: '#ebedef',
           },
+          max: 100
         },
       },
     };
@@ -146,7 +147,9 @@ export class ViewStudentsComponent {
   getAttendedTests(usn:string){
     this.viewStudentsService.getAttendedTests(usn).subscribe((data:any)=>{
       const labels = data.map((test:any) => test.test_name)
-      const score = data.map((test:any) => test.score)
+      const score = data.map((test:any) => (test.score/test.marks)*100)
+      // labels.splice(0,0,'')
+      // score.splice(0,0,0)
       this.attendedTests = data
       this.performanceCount = score.length
       this.performance = {

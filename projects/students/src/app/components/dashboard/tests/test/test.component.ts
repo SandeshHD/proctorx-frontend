@@ -9,6 +9,6 @@ export class TestComponent {
   @Input() test:any;
   @Output() openModal: EventEmitter<number> = new EventEmitter();
   openTestModal(){
-    this.openModal.emit(this.test.test_id)
+    this.openModal.emit(this.test.id)
   }
 }

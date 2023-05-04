@@ -1,8 +1,9 @@
 import { DOCUMENT } from '@angular/common';
-import { Component, HostListener, Inject } from '@angular/core';
+import { Component, HostListener, Inject, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { DashboardService } from '../dashboard/dashboard.service';
+import { QuestionComponent } from './question/question.component';
 import { TestWindowService } from './test-window.service';
 
 @Component({
@@ -18,6 +19,7 @@ export class TestWindowComponent {
   duration:any;
   timeLeft:any=0;
   timer:any;
+  @ViewChild(QuestionComponent) qc!:QuestionComponent;
   timeString = '00:00:00'
   constructor(private testWindowService:TestWindowService, private activatedRoute:ActivatedRoute,private router:Router,private messageService:MessageService,@Inject(DOCUMENT) private document: any){}
   @HostListener("document:fullscreenchange", []) fullScreen() {
@@ -50,7 +52,7 @@ export class TestWindowComponent {
       })
     })
   }
-  
+
   getTimeString(seconds:number){
     return new Date(seconds * 1000).toISOString().substring(11, 19)
   }
