@@ -28,6 +28,8 @@ import { ChartModule } from 'primeng/chart';
 import { ChipModule } from 'primeng/chip';
 import { PanelModule } from 'primeng/panel';
 import { CalendarModule } from 'primeng/calendar';
+import { LoginComponent } from './components/auth/login/login.component';
+import { SignupComponent } from './components/auth/signup/signup.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,6 +39,8 @@ import { CalendarModule } from 'primeng/calendar';
     CreateTestComponent,
     ViewStudentsComponent,
     ViewQuestionsComponent,
+    LoginComponent,
+    SignupComponent,
   ],
   imports: [
     BrowserModule,

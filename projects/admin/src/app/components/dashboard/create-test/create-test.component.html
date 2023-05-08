@@ -94,9 +94,13 @@
 
 <div class="dashboard-right">
     <div class="dashboard-heading d-flex justify-content-between align-items-center mb-4">
-        <h5 class="header m-0">Create Test</h5>
+        <h5 class="header m-0">{{editId?'Update Test':'Create Test'}}</h5>
         <div class="d-flex gap-2 align-items-center">
             <div class="d-flex gap-2 align-items-center">
+                <div>
+                    <button pButton label="Delete" *ngIf="editId" class="btn p-button-danger action-button" tooltipPosition="left" appendTo="body" (click)="deleteTest($event)"></button>
+                    <p-confirmPopup></p-confirmPopup>
+                </div>
                 <button pButton label="Create Question" class="btn action-button" tooltipPosition="left" appendTo="body" (click)="openQuestion()"></button>
                 <button pButton label="Save Test" class="btn action-button p-button-success" tooltipPosition="left" appendTo="body" (click)="submitTest()"></button>
             </div>
@@ -129,7 +133,7 @@
                     <div class="option-area" *ngFor="let option of question.option_set.split(',')">
                         <label class="option" >
                             <input type="radio" name="answer" [value]="option" [id]="option" class="option-label" [checked]="option===question.correct_answer?'checked':''" [disabled]="option!==question.correct_answer?true:false">
-                            <label class="option-label" [for]="option">{{option | titlecase}}</label>
+                            <label class="option-label" [for]="option">{{option}}</label>
                         </label>
                         <i class="pi pi-check right-answer" [ngClass]="{'d-block':option===question.correct_answer}"></i>
                     </div>
@@ -163,4 +167,4 @@
     </div>
 </div>
 
-<p-toast></p-toast>
+<p-toast position="bottom-right"> </p-toast>

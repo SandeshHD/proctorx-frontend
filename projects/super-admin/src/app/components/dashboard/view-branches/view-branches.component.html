@@ -1,0 +1,46 @@
+<p-dialog header="Add question" [(visible)]="createModal" [modal]="true" [draggable]="false" styleClass="branch" [resizable]="false" (onHide)="closeModal()">
+    <form [formGroup]="form" class="question-form">
+        <div class="row align-items-end px-3 pb-4">
+            <label for="q-title" class="form-label p-0">Branch Name</label>
+            <input pInputText type="text" formControlName="branch_name">
+        </div>
+        <div class="row px-3">
+            <button class="py-2" label="Save Question" pButton (click)="submitForm()"></button>
+        </div>
+    </form>
+</p-dialog>
+
+<div class="dashboard-right">
+    <div class="dashboard-heading d-flex justify-content-between align-items-center mb-4">
+        <h5 class="header m-0">Branches</h5>
+        <div class="d-flex gap-2 align-items-center">
+            <button pButton label="Create Branch" class="btn action-button" tooltipPosition="left" appendTo="body" (click)="openCreateBranchModal()"></button>
+        </div>
+    </div>
+    <p-table #table [value]="branches" styleClass="mb-5" [rows]="5">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>ID</th>
+                <th>Branch</th>
+                <th>Faculties</th>
+                <th>Students</th>
+                <th>Action</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-branch let-index="rowIndex">
+            <tr>
+                <td>{{index+1}}</td>
+                <td>{{branch.branch_name}}</td>
+                <td>{{branch.faculty_count}}</td>
+                <td>{{branch.student_count}}</td>
+                <td class="d-flex gap-2 justify-content-center">
+                    <button pButton icon="pi pi-pencil" class="btn action-button" pTooltip="Edit" tooltipPosition="left" appendTo="body" (click)="editBranch(branch)"></button>
+                    <button pButton icon="pi pi-trash" class="btn action-button p-button-danger" pTooltip="Delete" tooltipPosition="left" appendTo="body" (click)="deleteBranch($event,branch.branch_id)"></button>
+                    <p-confirmPopup></p-confirmPopup>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<p-toast position="bottom-right"> </p-toast>

@@ -1,0 +1,53 @@
+@import "../../../variables.scss";
+
+:host ::ng-deep{
+    .form-group{
+        margin:30px auto;
+        width:100%;
+        max-width: 400px;
+    }
+    
+    .button{
+        background-color: $primary-color;
+        border-radius: 5px;
+    }
+    
+    .form-input-label{
+        font-size: 0.85rem;
+        margin-bottom: 5px;
+    }
+    .ng-error{
+        font-size: 0.75rem;
+        color:$secondary-color;
+    }
+    .p-inputtext.ng-touched.ng-invalid{
+        border: 1px solid $secondary-color;
+    }
+}
+
+.router-container{
+    height:100%;    
+}
+
+.auth-container{
+    height: 100vh;
+}
+
+// .auth-left{
+//     // background: url('../../../assets/images/auth.jpg') no-repeat;
+//     // background-size: cover ;
+// }
+
+a{
+    color: #212529;
+}
+
+.auth-link.active:after{
+    content: "";
+    display: block;
+    height: 3px;
+    width:80%;
+    border-radius: 5px;
+    background-color: $secondary-color;
+}
+

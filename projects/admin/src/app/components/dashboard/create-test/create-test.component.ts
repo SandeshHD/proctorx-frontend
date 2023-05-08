@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router,ActivatedRoute } from '@angular/router';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { Paginator } from 'primeng/paginator';
 import { CreateTestService } from './create-test.service';
 
@@ -44,7 +44,7 @@ export class CreateTestComponent {
   @ViewChild('table', {static: false}) paginator!: Paginator;
 
 
-  constructor(private router:Router,private createTestService: CreateTestService, private messageService: MessageService,private activatedRoute: ActivatedRoute){}
+  constructor(private router:Router,private createTestService: CreateTestService, private messageService: MessageService,private activatedRoute: ActivatedRoute,private confirmationService:ConfirmationService){}
 
   ngOnInit(){
     this.faculty_id = JSON.parse(localStorage.getItem('userInfo')||'{}').id
@@ -81,6 +81,31 @@ export class CreateTestComponent {
     return this.form.get('topics') as FormArray;
   }
 
+  deleteTest(event:any){
+    this.confirmationService.confirm({
+      target: event.target,
+      message: 'Are you sure that you want to delete this test?',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.createTestService.deleteTest(this.editId).subscribe(result=>{
+          this.router.navigate(['create-test'])
+          setTimeout(()=>{
+            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Test deleted sucessfully' })
+          },50)
+        },(err)=>{
+          if(err.status === 404){
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Not found' })
+          }else if(err.status === 400){
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to delete test' })
+          }
+          else{
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Internal Server Error' })
+          }
+        })
+      },
+      reject: () => {}
+    });
+  }
   getTestInfoById(){
     this.createTestService.getTestInfoById(this.editId).subscribe((test:any)=>{
       if(test){
@@ -248,11 +273,14 @@ export class CreateTestComponent {
       }else{
         const body = {
           ...this.testForm.value,
-          questions:this.questionsIdList
+          questions:this.questionsIdList,
+          branch_id: JSON.parse(localStorage.getItem('userInfo')||'{}').branch,
         }
         this.createTestService.createTest(body).subscribe(response=>{
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Test added successfully!' })
-          // this.router.navigate(['edit-test',response['inserted']])
+          this.router.navigate(['edit-test',response['insertId']])
+          setTimeout(()=>{
+            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Test added successfully!' })
+          },50)
         },(err)=>{
           if(err.status === 400){
             this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Bad Request' })

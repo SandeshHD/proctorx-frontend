@@ -10,5 +10,5 @@
             <button class="submit-btn btn" (click)="submitTest()">Submit section</button>
         </div>
     </div>
-    <app-question></app-question>
+    <app-question (onFinish)="submitTest()"></app-question>
 </div>

@@ -37,4 +37,8 @@ export class CreateTestService {
     return this.http.patch<any>(URLS.BASE_URL + '/update/update_test',body);  
   }
 
+  deleteTest(test_id:any){
+    return this.http.delete<any>(URLS.BASE_URL + '/delete/delete_test?test_id='+test_id);  
+  }
+
 }

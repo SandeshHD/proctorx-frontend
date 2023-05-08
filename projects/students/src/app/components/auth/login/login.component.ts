@@ -27,6 +27,9 @@ export class LoginComponent {
       }else if(err.status === 400){
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Bad Request' })
       }
+      else if(err.status === 401){
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Your account has not been verified. Please contact the Admin' })
+      }
       else{
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Internal Server Error' })
       }

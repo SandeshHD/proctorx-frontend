@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthComponent } from './components/auth/auth.component';
+import { LoginComponent } from './components/auth/login/login.component';
+import { SignupComponent } from './components/auth/signup/signup.component';
 import { CreateTestComponent } from './components/dashboard/create-test/create-test.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ViewQuestionsComponent } from './components/dashboard/view-questions/view-questions.component';
@@ -9,8 +11,12 @@ import { ViewTestsComponent } from './components/dashboard/view-tests/view-tests
 
 const routes: Routes = [
   {
-    path:'auth',
-    component: AuthComponent
+    path: 'auth',
+    component: AuthComponent,
+    children: [
+      { path: '', component: LoginComponent, pathMatch: 'full' },
+      { path: 'signup', component: SignupComponent },
+    ],
   },
   {
     path: '',

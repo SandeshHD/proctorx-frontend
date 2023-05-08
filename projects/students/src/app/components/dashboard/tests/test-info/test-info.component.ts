@@ -20,9 +20,10 @@ export class TestInfoComponent {
     clearInterval(this.timer)
     this.onModalClose.emit(refresh);
   }
+  
   ngOnInit(){
-    this.countdownTimeStart(this.test.deadline)
-    this.elem = document.documentElement;
+    this.countdownTimeStart(this.test.deadline)    
+
     // this.dashboardService.getTestParts(this.test.test_id).subscribe((data:any)=>{
     //   this.testParts = data
     // },(err)=>{
@@ -63,28 +64,11 @@ export class TestInfoComponent {
     }, 1000);
     }
 
-    openFullscreen() {
-      if (this.elem.requestFullscreen) {
-        this.elem.requestFullscreen();
-      } else if (this.elem.mozRequestFullScreen) {
-        /* Firefox */
-        this.elem.mozRequestFullScreen();
-      } else if (this.elem.webkitRequestFullscreen) {
-        /* Chrome, Safari and Opera */
-        this.elem.webkitRequestFullscreen();
-      } else if (this.elem.msRequestFullscreen) {
-        /* IE/Edge */
-        this.elem.msRequestFullscreen();
-      }
-    }
-
     startTest(id:any){
       const body = {
         test_id : id
       }
-      this.openFullscreen()
       this.dashboardService.startTest(body).subscribe((response:any)=>{
-        console.log(response)
         this.router.navigate(['/test',id])
       })
     }

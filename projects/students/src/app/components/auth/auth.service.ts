@@ -20,7 +20,7 @@ export class AuthService {
     return this.http.post<any>(URLS.BASE_URL+'/auth',body)
   }
   
-  getTests(){
-    return this.http.get<any>(URLS.BASE_URL+'/tests')
-  }
+  // getTests(){
+  //   return this.http.get<any>(URLS.BASE_URL+'/tests')
+  // }
 }

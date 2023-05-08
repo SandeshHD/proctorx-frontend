@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { Paginator } from 'primeng/paginator';
 import { QuestionsService } from './questions.service';
 
@@ -37,7 +37,7 @@ export class ViewQuestionsComponent {
   ]
   @ViewChild('table', {static: false}) paginator!: Paginator;
 
-  constructor(private questionsService:QuestionsService,private messageService:MessageService){}
+  constructor(private questionsService:QuestionsService,private messageService:MessageService, private confirmationService:ConfirmationService){}
 
   ngOnInit(){
     this.faculty_id = JSON.parse(localStorage.getItem('userInfo')||'{}').id
@@ -155,6 +155,33 @@ export class ViewQuestionsComponent {
     })
     this.updateModal = true;
   }
+
+  deleteQuestion(event:any, question_id:any){
+    this.confirmationService.confirm({
+      target: event.target,
+      message: 'Are you sure that you want to delete this question?',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.questionsService.deleteQuestion(question_id).subscribe(result=>{
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Question deleted sucessfully' })
+          let idx = this.questions.findIndex((q:any)=> q.question_id == question_id)
+          this.questions.splice(idx,1)
+        },(err)=>{
+          if(err.status === 404){
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Not found' })
+          }else if(err.status === 400){
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to delete question' })
+          }
+          else{
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Internal Server Error' })
+          }
+        })
+      },
+      reject: () => {}
+    });
+
+  }
+
 
   submitForm(){
     let addedTopics:any = []

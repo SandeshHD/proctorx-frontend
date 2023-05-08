@@ -22,7 +22,7 @@
         <div class="options">
             <label class="option" *ngFor="let option of options">
                 <input type="radio" name="answer" formControlName="answer" [value]="option" [id]="option" class="option-label">
-                <label class="option-label" [for]="option">{{option | titlecase}}</label>
+                <label class="option-label" [for]="option">{{option}}</label>
             </label>
         </div>
         <div class="next py-3">

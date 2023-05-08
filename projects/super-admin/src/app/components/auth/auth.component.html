@@ -1,0 +1,38 @@
+<p-toast position="bottom-right"> </p-toast>
+<div class="container-fluid">
+    <div class="row auth-container">
+        <div class="auth-left bg-light col-7">
+            <div class="brand fw-500 fs-5 m-4">Proctor <span class="colored">X</span></div>
+        </div>
+        <div class="auth-right col-5 overflow-auto h-100 py-5 d-grid align-items-center">
+            <div class="row mx-4">
+                <div class="auth-links d-flex justify-content-center gap-3">
+                    <div class="text-uppercase auth-link">Admin sign in</div>
+                </div>
+                <div class="router-container">
+                    <form class="form" [formGroup]="form">
+                        <div class="form-group">
+                            <div class="form-input-label">Username</div>
+                            <input class="form-item w-100" pInputText type="email" formControlName="username">
+                            <small class="ng-error" *ngIf="form.controls.username.touched && form.controls.username.hasError('required')">Please fill this field.</small>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-input-label">Password</div>
+                            <input class="form-item w-100" pInputText type="password" formControlName="password">
+                            <small class="ng-error" *ngIf="form.controls.password.touched && form.controls.password.hasError('required')">Please fill this field.</small>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn w-100 button text-light py-2 d-grid mx-auto" (click)="onSubmit()" [disabled]="form.invalid">SIGN IN</button>
+                        </div>
+                    </form>
+                    <!-- <small class="d-block text-center mt-3">
+                        Forgot Password? <a class="colored text-decoration-none" routerLink="/auth/login">Reset</a>
+                    </small> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

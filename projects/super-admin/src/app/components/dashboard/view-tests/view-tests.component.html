@@ -1,0 +1,117 @@
+<p-dialog [header]="currentTest?.test_name" [(visible)]="visible" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
+    <p-accordion class="w-full" [multiple]="true">
+        <p-accordionTab *ngFor="let question of questionSet">
+            <ng-template pTemplate="header">
+                <div class="flex align-items-center">
+                    <span class="vertical-align-middle">{{question.question_title}}</span>
+                </div>
+            </ng-template>
+
+            <ng-template pTemplate="content">
+                <form class="options-section py-3">
+                    <div class="options">
+                        <div class="option-area" *ngFor="let option of question.option_set.split(',')">
+                            <label class="option" >
+                                <input type="radio" name="answer" [value]="option" [id]="option" class="option-label" [checked]="option===question.correct_answer?'checked':''" [disabled]="option!==question.correct_answer?true:false">
+                                <label class="option-label" [for]="option">{{option}}</label>
+                            </label>
+                            <i class="pi pi-check right-answer" [ngClass]="{'d-block':option===question.correct_answer}"></i>
+                        </div>
+                    </div>  
+                    <div class="question-info">
+                        <h6 class="mb-3">Question Info</h6>
+                        <table class="w-100 table question-info-table">
+                            <tr>
+                                <td>Points</td>
+                                <td>{{question.points}}</td>
+                            </tr>
+                            <tr>
+                                <td>Difficulty Level</td>
+                                <td>{{question.difficulty_level}}</td>
+                            </tr>
+                            <tr>
+                                <td>Time Limit</td>
+                                <td>{{question.time_limit}}</td>
+                            </tr>
+                            <tr>
+                                <td>Created By</td>
+                                <td>{{question.name}}</td>
+                            </tr>
+                        </table>
+                    </div>  
+                </form>
+            </ng-template>
+        </p-accordionTab>
+    </p-accordion>
+</p-dialog>
+
+<p-dialog [header]="currentTest?.test_name" *ngIf="testResultVisible" [(visible)]="testResultVisible" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
+    <p-table [value]="results" styleClass="mb-5" [rows]="10" [totalRecords]="totalStudents" [showCurrentPageReport]="true" [rowsPerPageOptions]="[1,10,25,50]" [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [lazy]="true" (onLazyLoad)="studentPaginationHandler($event)" paginatorDropdownAppendTo="body">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>ID</th>
+                <th>Student Name</th>
+                <th>Attended Date</th>
+                <th>Total Marks</th>
+                <th>Score</th>
+                <th>Time Taken</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-student let-index="rowIndex" paginatorDropdownAppendTo="body">
+            <tr>
+                <td>{{index+1}}</td>
+                <td>{{student.name}}</td>
+                <td>{{student.attended_date|date}}</td>
+                <td>{{student.marks}}</td>
+                <td>{{student.score}}</td>
+                <td>{{student.time_taken/60}}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</p-dialog>
+
+<div class="dashboard-right">
+    <div class="dashboard-heading d-flex justify-content-between align-items-center mb-4">
+        <h5 class="header m-0">View Tests</h5>
+        <div class="d-flex gap-2 align-items-center">
+            <p-dropdown [options]="status" (onChange)="changeFilter($event)" placeholder="Status"></p-dropdown>
+            <p-dropdown [style]="{'width':'200px'}" [options]="branches" optionLabel="branch_name" optionValue="branch_id" (onChange)="changeBranch($event)" placeholder="Branch"></p-dropdown>
+            <input type="text" pInputText (input)="searchTest($event)" placeholder="Search"/>
+        </div>
+    </div>
+    <p-table #table [value]="tests" styleClass="mb-5" [rows]="5" [totalRecords]="totalRecords" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]" [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [lazy]="true" (onLazyLoad)="paginationHandler($event)">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>ID</th>
+                <th>Test Name</th>
+                <th>Faculty</th>
+                <th>Duration</th>
+                <th>Questions</th>
+                <th>Marks</th>
+                <th>Change Status</th>
+                <th>Deadline</th>
+                <th>Action</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-test let-index="rowIndex">
+            <tr>
+                <td>{{index+1}}</td>
+                <td>{{test.test_name}}</td>
+                <td>{{test.name}}</td>
+                <td>{{test.duration/60}} Mins</td>
+                <td>{{test.questions}}</td>
+                <td>{{test.marks}}</td>
+                <td><p-tag styleClass="px-3" role="button" [severity]="test.status==='enabled'?'danger':'success'" [value]="test.status==='enabled'?'Disable':'Enable'" (click)="changeStatus(test)"></p-tag></td>
+                <td>{{test.deadline|date}}</td>
+                <td class="action d-flex gap-2">
+                    <button pButton icon="pi pi-eye" class="btn p-button-success action-button" (click)="showTest(test)" pTooltip="View answers" tooltipPosition="left" appendTo="body"></button>
+                    <button pButton icon="pi pi-check-square" class="btn" (click)="showResult($event,test)" pTooltip="View Results" tooltipPosition="left" appendTo="body"></button>
+                    <button pButton icon="pi pi-trash" class="btn action-button p-button-danger" pTooltip="Delete" tooltipPosition="left" (click)="deleteTest($event,test.id)" appendTo="body"></button>
+                    <p-confirmPopup></p-confirmPopup>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<p-toast position="bottom-right"> </p-toast>

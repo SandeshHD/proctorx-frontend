@@ -25,4 +25,8 @@ export class QuestionsService {
   updateQuestion(body:any){
     return this.http.patch<any>(URLS.BASE_URL + '/update/update_question',body);  
   }
+
+  deleteQuestion(question_id:any){
+    return this.http.delete<any>(URLS.BASE_URL + '/delete/delete_question?question_id='+question_id);  
+  }
 }

@@ -39,7 +39,7 @@
                     <td>{{test.id}}</td>
                     <td>{{test.test_name}}</td>
                     <td>{{test.name}}</td>
-                    <td>{{test.attended_data|date}}</td>
+                    <td>{{test.attended_date|date}}</td>
                     <td>{{test.sections}}</td>
                     <td>{{test.marks}}</td>
                     <td>{{test.score}}</td>
@@ -52,14 +52,8 @@
     <div class="dashboard-heading d-flex justify-content-between align-items-center mb-4">
         <h5 class="header m-0">View Students</h5>
         <div class="d-flex gap-2 align-items-center">
-            <div class="d-flex gap-2 align-items-center">
-                <div class="label">Semester:</div>
-                <p-dropdown [options]="semester" (onChange)="changeFilter($event)"></p-dropdown>
-            </div>
-            <div class="d-flex gap-2 align-items-center">
-                <div class="label">Search:</div>
-                <input type="text" pInputText (input)="searchStudent($event)"/>
-            </div>
+            <p-dropdown [options]="semester" (onChange)="changeFilter($event)" placeholder="Semester"></p-dropdown>
+            <input type="text" pInputText (input)="searchStudent($event)" placeholder="Search"/>
         </div>
     </div>
     <p-table #table [value]="students" styleClass="mb-5" [rows]="5" [totalRecords]="totalRecords" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]" [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [lazy]="true" (onLazyLoad)="paginationHandler($event)">
@@ -94,4 +88,4 @@
     </p-table>
 </div>
 
-<p-toast></p-toast>
+<p-toast position="bottom-right"> </p-toast>

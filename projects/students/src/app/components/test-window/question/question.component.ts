@@ -1,4 +1,5 @@
-import { Component} from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Component, EventEmitter, Inject, Input, Output} from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng/api';
@@ -10,6 +11,7 @@ import { TestWindowService } from '../test-window.service';
   styleUrls: ['./question.component.scss']
 })
 export class QuestionComponent {
+  @Output() onFinish:EventEmitter<any>= new EventEmitter<any>();;
   timeLeft:any;
   timer:any;
   question:any;
@@ -23,8 +25,9 @@ export class QuestionComponent {
   totalQuestions:number = 0
   questionsStatus:any=[];
   usn:any;
+  elem:any;
   answerForm!: FormGroup;
-  constructor(private testWindowService:TestWindowService,private activatedRoute:ActivatedRoute,private messageService:MessageService){}
+  constructor(private testWindowService:TestWindowService,private activatedRoute:ActivatedRoute,private messageService:MessageService,@Inject(DOCUMENT) private document: any){}
 
   ngOnInit(){
     this.usn = JSON.parse(localStorage.getItem('userInfo')||'{}').usn
@@ -34,6 +37,7 @@ export class QuestionComponent {
       "test_id": new FormControl(),
       "answer":new FormControl(null),
     })
+
     this.activatedRoute.params.subscribe(params=>{
       this.testId = params['id']
       this.answerForm.controls['test_id'].setValue(this.testId)
@@ -57,6 +61,7 @@ export class QuestionComponent {
 
   }
 
+
   getNextQuestion(){
     if(this.currentIndex < this.tests.length){
       if(this.answerForm.controls['answer'].value){
@@ -74,7 +79,7 @@ export class QuestionComponent {
         ++this.currentIndex;
 
       if(this.currentIndex >= this.tests.length)
-      return;
+      return this.onFinish.emit();
       this.timeLeft = this.tests[this.currentIndex]?.time_limit
       this.timer = setInterval(()=>{
         this.timeLeft -=1 
@@ -93,11 +98,15 @@ export class QuestionComponent {
   }
   
   submitAnswer(){
-    this.timeLeft = 0
     this.questionsStatus[this.currentIndex] = 'done'    
     this.questionsStatus[this.currentIndex+1] = 'current'
     this.answeredQuestions += 1
-    this.testWindowService.patchQuestionScore(this.answerForm.value).subscribe(response=>{
+    const body = {
+      ...this.answerForm.value,
+      time_taken: this.tests[this.currentIndex]?.time_limit - this.timeLeft
+    }
+    this.timeLeft = 0
+    this.testWindowService.patchQuestionScore(body).subscribe(response=>{
       this.savedInServer += 1
       this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Question saved successfully' })
     },(err)=>{
