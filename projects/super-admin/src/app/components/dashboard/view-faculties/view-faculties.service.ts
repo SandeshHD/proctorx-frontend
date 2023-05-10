@@ -13,12 +13,8 @@ export class ViewFacultiesService {
     return this.http.get<any>(URLS.BASE_URL + '/read/faculties?rows='+rows+'&first='+first+'&branch_id='+branch_id+'&status='+currentStatus+'&query='+query);  
   }
 
-  getAttendedTests(usn:string){
-    return this.http.get<any>(URLS.BASE_URL + '/read/attended_tests?usn='+usn);
-  }
-  
-  getTopicScore(usn:string){
-    return this.http.get<any>(URLS.BASE_URL + '/read/topic_score?usn='+usn);  
+  getFacultyInfo(id:string){
+    return this.http.get<any>(URLS.BASE_URL + '/read/faculty_info?id='+id);  
   }
   
   getBranches(){
@@ -27,6 +23,10 @@ export class ViewFacultiesService {
 
   changeStatus(body:any){
     return this.http.patch<any>(URLS.BASE_URL + '/update/change_faculty_status',body);  
+  }
+
+  updateFaculty(body:any){
+    return this.http.patch<any>(URLS.BASE_URL + '/update/update_faculty',body);  
   }
   
   deleteFaculty(id:string){

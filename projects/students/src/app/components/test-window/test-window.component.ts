@@ -1,5 +1,4 @@
-import { DOCUMENT } from '@angular/common';
-import { Component, Inject, ViewChild } from '@angular/core';
+import { Component, HostListener, Inject, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { QuestionComponent } from './question/question.component';
@@ -18,14 +17,14 @@ export class TestWindowComponent {
   duration:any;
   timeLeft:any=0;
   elem:any;
+  violationCount = 0;
   timer:any;
   @ViewChild(QuestionComponent) qc!:QuestionComponent;
   timeString = '00:00:00'
-  constructor(private testWindowService:TestWindowService, private activatedRoute:ActivatedRoute,private router:Router,private messageService:MessageService,@Inject(DOCUMENT) private document: any){}
+  constructor(private testWindowService:TestWindowService, private activatedRoute:ActivatedRoute,private router:Router,private messageService:MessageService){}
 
   ngOnInit(){
     this.elem = document.documentElement
-    this.openFullscreen()
     this.activatedRoute.params.subscribe(params=>{
       this.testId = params['id']
       this.testWindowService.getTestInfo(this.testId).subscribe(response=>{
@@ -51,44 +50,15 @@ export class TestWindowComponent {
         }
       })
     })
-
-    // this.document.addEventListener("keydown",(event:any)=>{
-    //   if(event.key === 'Escape' || event.key === 'F11'){
-    //     event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-    //     console.log(event.key)
-    //   }
-    // })
-    
   }
 
-
-  closeFullscreen() {
-    if (this.document.exitFullscreen) {
-      this.document.exitFullscreen();
-    } else if (this.document.mozCancelFullScreen) {
-      /* Firefox */
-      this.document.mozCancelFullScreen();
-    } else if (this.document.webkitExitFullscreen) {
-      /* Chrome, Safari and Opera */
-      this.document.webkitExitFullscreen();
-    } else if (this.document.msExitFullscreen) {
-      /* IE/Edge */
-      this.document.msExitFullscreen();
-    }
-  }
-
-  openFullscreen() {
-    if (this.elem.requestFullscreen) {
-      this.elem.requestFullscreen();
-    } else if (this.elem.mozRequestFullScreen) {
-      /* Firefox */
-      this.elem.mozRequestFullScreen();
-    } else if (this.elem.webkitRequestFullscreen) {
-      /* Chrome, Safari and Opera */
-      this.elem.webkitRequestFullscreen();
-    } else if (this.elem.msRequestFullscreen) {
-      /* IE/Edge */
-      this.elem.msRequestFullscreen();
+  @HostListener('document:visibilitychange', ['$event'])
+  visibilitychange() {
+    if(document.visibilityState==='hidden'){
+      this.violationCount++;
+      this.messageService.add({key:'warning-key', severity: 'error', summary: 'Violation!',sticky:true, detail: 'Switching tabs during the test is a violation and may result in disqualification.' })
+      if(this.violationCount === 2)
+      this.submitTest()
     }
   }
 
@@ -103,7 +73,6 @@ export class TestWindowComponent {
       duration: this.duration - this.timeLeft
     }
     this.testWindowService.submitTest(body).subscribe(response=>{
-      this.closeFullscreen();
       this.router.navigate(['/submission'])
     },(err)=>{
       if(err.status === 404){

@@ -30,6 +30,7 @@ import { ChartModule } from 'primeng/chart';
 import { ViewFacultiesComponent } from './components/dashboard/view-faculties/view-faculties.component';
 import { ViewBranchesComponent } from './components/dashboard/view-branches/view-branches.component';
 import { ViewTopicsComponent } from './components/dashboard/view-topics/view-topics.component';
+import { NoticeBoardComponent } from './components/dashboard/notice-board/notice-board.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { ViewTopicsComponent } from './components/dashboard/view-topics/view-top
     ViewStudentsComponent,
     ViewFacultiesComponent,
     ViewBranchesComponent,
-    ViewTopicsComponent
+    ViewTopicsComponent,
+    NoticeBoardComponent
   ],
   imports: [
     BrowserModule,

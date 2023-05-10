@@ -1,3 +1,31 @@
+<p-dialog header="Update Student" [(visible)]="updateModal" [modal]="true" [draggable]="false" styleClass="topic" [resizable]="false">
+    <form [formGroup]="profileForm" class="profile-form">
+        <div class="row align-items-end px-3 pb-4">
+            <label for="usn" class="form-label p-0">USN</label>
+            <input pInputText type="text" formControlName="usn" [readonly]="true">
+        </div>
+        <div class="row align-items-end px-3 pb-4">
+            <label for="name" class="form-label p-0">Name</label>
+            <input pInputText type="text" formControlName="name">
+        </div>
+        <div class="row align-items-end px-3 pb-4">
+            <label for="q-title" class="form-label p-0">Email</label>
+            <input pInputText type="text" formControlName="email">
+        </div>
+        <div class="row align-items-end px-3 pb-4">
+            <label for="q-title" class="form-label p-0">Branch</label>
+            <p-dropdown styleClass="w-100 p-0" [options]="branches.slice(1)" optionLabel="branch_name" optionValue="branch_id" formControlName="branch" placeholder="Branch"></p-dropdown>
+        </div>
+        <div class="row align-items-end px-3 pb-4">
+            <label for="q-title" class="form-label p-0">Semester</label>
+            <p-dropdown styleClass="w-100 p-0" [options]="semester.slice(1)" formControlName="semester" placeholder="Semester"></p-dropdown>
+        </div>
+        <div class="row px-3">
+            <button class="py-2" label="Update" pButton (click)="updateStudent()"></button>
+        </div>
+    </form>
+</p-dialog>
+
 <p-dialog header="Student Information" [(visible)]="visible" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
     <div class="no-records text-center" *ngIf="topicCount===0 && performanceCount===0">No Data found</div>
     <div class="stat-container" *ngIf="topicCount>0 && performanceCount>0">
@@ -64,7 +92,7 @@
                 <th>ID</th>
                 <th>USN</th>
                 <th>Student Name</th>
-                <th>Email</th>
+                <th>Branch</th>
                 <th>Semester</th>
                 <th>Change Status</th>
                 <th>Action</th>
@@ -75,11 +103,12 @@
                 <td>{{index+1}}</td>
                 <td>{{student.usn}}</td>
                 <td>{{student.name}}</td>
-                <td>{{student.email}}</td>
+                <td>{{student.branch_name}}</td>
                 <td>{{student.semester}}</td>
                 <td><p-tag styleClass="px-3" role="button" [severity]="student.verified?'danger':'success'" [value]="student.verified?'Deactivate':'Activate'" (click)="changeStatus(student)"></p-tag></td>
                 <td class="d-flex gap-2 justify-content-center">
-                    <button pButton icon="pi pi-eye" class="btn action-button" pTooltip="View" tooltipPosition="left" appendTo="body" (click)="openStudentDetails(student.usn)"></button>
+                    <button pButton icon="pi pi-eye" class="btn action-button p-button-success" pTooltip="View" tooltipPosition="left" appendTo="body" (click)="openStudentDetails(student.usn)"></button>
+                    <button pButton icon="pi pi-pencil" class="btn action-button" pTooltip="Edit" tooltipPosition="left" appendTo="body" (click)="openEditStudentModal($event,student.usn)"></button>
                     <button pButton icon="pi pi-trash" class="btn action-button p-button-danger" pTooltip="Delete" tooltipPosition="left" appendTo="body" (click)="deleteStudent($event,student.usn)"></button>
                     <p-confirmPopup></p-confirmPopup>
                 </td>

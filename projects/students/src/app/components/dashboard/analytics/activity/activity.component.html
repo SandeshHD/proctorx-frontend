@@ -1,3 +1,13 @@
+<p-dialog  [(visible)]="visible" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
+    <ng-template pTemplate="header">
+        <div>
+            <h5>{{notice.notice_heading}}</h5>
+            <small class="d-block activity-by">By <span class="colored">{{notice.name}}</span> on <span class="colored">{{notice.notice_date|date}}</span></small>
+        </div>
+    </ng-template>
+    <p class="m-0">{{notice.notice}}</p>
+</p-dialog>
+
 <div class="activity-container">
     <div class="activity-text">
         <h6 class="activity-heading m-0">{{notice.notice_heading}}</h6>

@@ -7,8 +7,9 @@ import { Component, Input } from '@angular/core';
 })
 export class ActivityComponent {
   @Input() notice!:any;
+  visible = false
 
   readMore(){
-    console.log(this.notice)
+    this.visible = true
   }
 }

@@ -17,6 +17,10 @@ export class ViewStudentsService {
     return this.http.get<any>(URLS.BASE_URL + '/read/attended_tests?usn='+usn);
   }
   
+  getStudentInfo(usn:string){
+    return this.http.get<any>(URLS.BASE_URL + '/read/student_info?usn='+usn);  
+  }
+
   getTopicScore(usn:string){
     return this.http.get<any>(URLS.BASE_URL + '/read/topic_score?usn='+usn);  
   }
@@ -27,6 +31,10 @@ export class ViewStudentsService {
   
   changeStatus(body:any){
     return this.http.patch<any>(URLS.BASE_URL + '/update/change_student_status',body);  
+  }
+  
+  updateStudent(body:any){
+    return this.http.patch<any>(URLS.BASE_URL + '/update/update_student',body);  
   }
 
   deleteStudent(usn:string){

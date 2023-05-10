@@ -26,6 +26,7 @@ import { MessageService } from 'primeng/api';
 import { QuestionComponent } from './components/test-window/question/question.component';
 import { MenuModule } from 'primeng/menu';
 import { SubmissionComponent } from './components/submission/submission.component';
+import { DialogModule } from 'primeng/dialog';
 @NgModule({
   declarations: [
     AppComponent,
@@ -52,6 +53,7 @@ import { SubmissionComponent } from './components/submission/submission.componen
     DropdownModule,
     InputTextModule,
     ToastModule,
+    DialogModule,
     InputNumberModule,
     TableModule,
     ChartModule,

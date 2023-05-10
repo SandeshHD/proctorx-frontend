@@ -4,6 +4,7 @@
 </div>
 <div class="row">
     <h5 class="my-4 dashboard-heading">Upcoming tests</h5>
+    <div class="text-center" *ngIf="tests?.length==0">No records found</div>
     <div class="text-container">
         <app-test *ngFor="let test of tests" [test]="test" (openModal)="openModal($event)"></app-test>
     </div>

@@ -30,6 +30,7 @@ import { PanelModule } from 'primeng/panel';
 import { CalendarModule } from 'primeng/calendar';
 import { LoginComponent } from './components/auth/login/login.component';
 import { SignupComponent } from './components/auth/signup/signup.component';
+import { NoticeBoardComponent } from './components/dashboard/notice-board/notice-board.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,6 +42,7 @@ import { SignupComponent } from './components/auth/signup/signup.component';
     ViewQuestionsComponent,
     LoginComponent,
     SignupComponent,
+    NoticeBoardComponent,
   ],
   imports: [
     BrowserModule,

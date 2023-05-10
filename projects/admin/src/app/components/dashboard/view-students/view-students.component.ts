@@ -115,6 +115,15 @@ export class ViewStudentsComponent {
     this.viewStudentsService.getStudents(first,rows,this.selectedSemester,this.searchValue).subscribe(response=>{
       this.students = response
       this.totalRecords = (response && response.length>0)?response[0]['total_records']:0;
+    },(err)=>{
+      if(err.status === 404){
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Not found' })
+      }else if(err.status === 400){
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Bad request' })
+      }
+      else{
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Internal Server Error' })
+      }
     })
   }
 

@@ -26,7 +26,8 @@ export class DashboardService {
   
   getUserStats(){
     let usn = JSON.parse(localStorage.getItem('userInfo')||'{}').usn
-    return this.http.get<any>(URLS.BASE_URL + '/read/user_stats?usn='+usn);
+    let branch_id = JSON.parse(localStorage.getItem('userInfo')||'{}').branch
+    return this.http.get<any>(URLS.BASE_URL + '/read/user_stats?usn='+usn+'&branch_id='+branch_id);
   }
   
   getTopicScore(){

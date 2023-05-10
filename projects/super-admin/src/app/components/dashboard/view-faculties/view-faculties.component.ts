@@ -1,4 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Paginator } from 'primeng/paginator';
 import { ViewFacultiesService } from './view-faculties.service';
@@ -12,8 +13,11 @@ export class ViewFacultiesComponent {
   faculties:any;
   selectedBranch = 0;
   searchValue = '';
-  visible = false
+  visible = false;
+  profileForm:any;
   totalRecords:number=0;
+  updateModal = false;
+  currentID:any;
   topicScore:any;
   topicCount = 0;
   currentStatus:any = -1;
@@ -80,6 +84,12 @@ export class ViewFacultiesComponent {
   ]
   
   ngOnInit(){
+    this.profileForm = new FormGroup({
+      employee_id:new FormControl(null,[Validators.required]),
+      name:new FormControl(null,[Validators.required]),
+      email:new FormControl(null,[Validators.required]),
+      branch:new FormControl(null,[Validators.required]),
+    })
     this.getBranches()
     this.skillsOptions = {
       responsive:true,
@@ -132,6 +142,15 @@ export class ViewFacultiesComponent {
     this.viewFacultiesService.getFaculties(first,rows,this.selectedBranch,this.searchValue,this.currentStatus).subscribe(response=>{
       this.faculties = response
       this.totalRecords = (response && response.length>0)?response[0]['total_records']:0;
+    },(err)=>{
+      if(err.status === 404){
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Not found' })
+      }else if(err.status === 400){
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Bad request' })
+      }
+      else{
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Internal Server Error' })
+      }
     })
   }
 
@@ -162,6 +181,37 @@ export class ViewFacultiesComponent {
       }
     })
   }
+
+  openEditFacultyModal(event:any,id:string){
+    this.viewFacultiesService.getFacultyInfo(id).subscribe(faculty=>{
+      this.profileForm.setValue(faculty)
+      this.currentID = id
+      this.updateModal = true;
+    })
+  }
+
+  updateFaculty(){
+    this.profileForm.markAllAsTouched()
+    this.profileForm.markAsDirty()
+    if(this.profileForm.valid){
+      const body = {
+        ...this.profileForm.value,
+        currentID: this.currentID
+      }
+      this.viewFacultiesService.updateFaculty(body).subscribe(data=>{
+        this.getFaculties(0,5)
+        this.updateModal = false
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Faculty updated successfully!' })
+        this.currentID = null
+      },(err)=>{
+        console.log(err)
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to update branch. Please try again' })
+      })
+    }else{
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Please fill all the required fields' })
+    }
+  }
+
 
   deleteFaculty(event:any,id:string){
     this.confirmationService.confirm({
@@ -209,79 +259,9 @@ export class ViewFacultiesComponent {
     this.getFaculties(0,5)
     this.paginator.first = 0
   }
-
-  openFacultyDetails(usn:string){
-    this.getTopicScore(usn)
-    this.getAttendedTests(usn)
-    this.visible =true
-  }
   
   applyFilterGlobal($event:any, stringVal:any) {
     this.dt.filterGlobal(($event.target as HTMLInputElement).value, stringVal);
   }
-
-  getAttendedTests(usn:string){
-    this.viewFacultiesService.getAttendedTests(usn).subscribe((data:any)=>{
-      const labels = data.map((test:any) => test.test_name)
-      const score = data.map((test:any) => (test.score/test.marks)*100)
-      // labels.splice(0,0,'')
-      // score.splice(0,0,0)
-      this.attendedTests = data
-      this.performanceCount = score.length
-      this.performance = {
-        labels: labels,
-        datasets: [
-          {
-            label: 'Test performance',
-            data: score,
-            fill: false,
-            borderColor: '#42A5F5',
-            tension: 0.4,
-          }
-        ],
-      };
-    },err=>{
-      if(err.status === 404){
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Invalid credentials' })
-      }else if(err.status === 400){
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Bad Request' })
-      }
-      else{
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Internal Server Error' })
-      }
-    })
-  }
-
-  getTopicScore(usn:string){
-    this.viewFacultiesService.getTopicScore(usn).subscribe((data:any)=>{
-      const score = data.map((topic:any)=> topic.score)
-      const topic_name = data.map((topic:any)=> topic.topic_name)
-      this.topicCount = score.length
-      this.topicScore = {
-        labels:topic_name,
-        datasets:[{
-          data: score,
-          backgroundColor: [
-            '#FF6384',
-            '#C9CBCF',
-            '#9966FF',
-            '#36A2EB',
-            '#4BC0C0',
-            '#FF8863',
-            '#FFCD56',
-            '#FF9F40',
-          ],
-        }]
-      }
-    },err=>{
-      if(err.status === 404){
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Not found' })
-      }else if(err.status === 400){
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Bad Request' })
-      }
-      else{
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Internal Server Error' })
-      }
-    })
-  }
+  
 }

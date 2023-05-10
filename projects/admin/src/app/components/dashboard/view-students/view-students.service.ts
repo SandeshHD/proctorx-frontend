@@ -10,7 +10,7 @@ export class ViewStudentsService {
 
   getStudents(first:number,rows:number,semester:number,query:string){
     let branch_id = JSON.parse(localStorage.getItem('userInfo')||'{}').branch
-    return this.http.get<any>(URLS.BASE_URL + '/read/students?branch_id='+branch_id+'&rows='+rows+'&first='+first+'&semester='+semester+'&query='+query);  
+    return this.http.get<any>(URLS.BASE_URL + '/read/students?branch_id='+branch_id+'&rows='+rows+'&first='+first+'&semester='+semester+'&query='+query+'&status=-1');  
   }
 
   getAttendedTests(usn:string){

@@ -1,4 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Paginator } from 'primeng/paginator';
 import { ViewStudentsService } from './view-students.service';
@@ -10,6 +11,7 @@ import { ViewStudentsService } from './view-students.service';
 })
 export class ViewStudentsComponent {
   students:any;
+  profileForm:any;
   selectedSemester = 0;
   selectedBranch = 0;
   searchValue = '';
@@ -17,6 +19,7 @@ export class ViewStudentsComponent {
   totalRecords:number=0;
   topicScore:any;
   topicCount = 0;
+  updateModal = false;
   branches: any = [{branch_id:0,branch_name:"All"}];
   performanceCount = 0;
   performance:any;
@@ -81,6 +84,13 @@ export class ViewStudentsComponent {
   ]
   
   ngOnInit(){
+    this.profileForm = new FormGroup({
+      usn:new FormControl(null,[Validators.required]),
+      name:new FormControl(null,[Validators.required]),
+      email:new FormControl(null,[Validators.required]),
+      branch:new FormControl(null,[Validators.required]),
+      semester:new FormControl(null,[Validators.required]),
+    })
     this.getBranches()
     this.skillsOptions = {
       responsive:true,
@@ -133,6 +143,15 @@ export class ViewStudentsComponent {
     this.viewStudentsService.getStudents(first,rows,this.selectedBranch,this.selectedSemester,this.currentStatus,this.searchValue).subscribe(response=>{
       this.students = response
       this.totalRecords = (response && response.length>0)?response[0]['total_records']:0;
+    },(err)=>{
+      if(err.status === 404){
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Not found' })
+      }else if(err.status === 400){
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Bad request' })
+      }
+      else{
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Internal Server Error' })
+      }
     })
   }
 
@@ -140,6 +159,30 @@ export class ViewStudentsComponent {
     this.viewStudentsService.getBranches().subscribe(response =>{
       this.branches = [...this.branches,...response]
     })
+  }
+
+  openEditStudentModal(event:any,usn:string){
+    this.viewStudentsService.getStudentInfo(usn).subscribe(student=>{
+      this.profileForm.setValue(student)
+      this.updateModal = true;
+    })
+  }
+
+  updateStudent(){
+    this.profileForm.markAllAsTouched()
+    this.profileForm.markAsDirty()
+    if(this.profileForm.valid){
+      this.viewStudentsService.updateStudent(this.profileForm.value).subscribe(data=>{
+        this.getStudents(0,5)
+        this.updateModal = false
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Student updated successfully!' })
+      },(err)=>{
+        console.log(err)
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to update branch. Please try again' })
+      })
+    }else{
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Please fill all the required fields' })
+    }
   }
 
   deleteStudent(event:any,usn:string){
