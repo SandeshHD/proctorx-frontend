@@ -33,10 +33,11 @@
     height: 100vh;
 }
 
-// .auth-left{
-//     // background: url('../../../assets/images/auth.jpg') no-repeat;
-//     // background-size: cover ;
-// }
+.auth-left{
+    background: url('../../../assets/images/auth.png') no-repeat;
+    background-size: 80%;
+    background-position: 50% 50%;
+}
 
 a{
     color: #212529;

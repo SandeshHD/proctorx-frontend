@@ -1,11 +1,11 @@
-<p-dialog header="Add question" [(visible)]="createModal" [modal]="true" [draggable]="false" styleClass="branch" [resizable]="false" (onHide)="closeModal()">
+<p-dialog header="Add Branch" [(visible)]="createModal" [modal]="true" [draggable]="false" styleClass="branch" [resizable]="false" (onHide)="closeModal()">
     <form [formGroup]="form" class="question-form">
         <div class="row align-items-end px-3 pb-4">
             <label for="q-title" class="form-label p-0">Branch Name</label>
             <input pInputText type="text" formControlName="branch_name">
         </div>
         <div class="row px-3">
-            <button class="py-2" label="Save Question" pButton (click)="submitForm()"></button>
+            <button class="py-2" label="Save Branch" pButton (click)="submitForm()"></button>
         </div>
     </form>
 </p-dialog>
