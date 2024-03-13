@@ -12,11 +12,11 @@ import { ViewTopicsComponent } from './components/dashboard/view-topics/view-top
 
 const routes: Routes = [
   {
-    path:'auth',
+    path:'superadmin/auth',
     component: AuthComponent
   },
   {
-    path: '',
+    path: 'superadmin',
     component: DashboardComponent,
     children: [
       { path: '', component: ViewTestsComponent, pathMatch: 'full' },
