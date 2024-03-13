@@ -12,7 +12,7 @@ import { ViewTestsComponent } from './components/dashboard/view-tests/view-tests
 
 const routes: Routes = [
   {
-    path: 'admin/auth',
+    path: 'auth',
     component: AuthComponent,
     children: [
       { path: '', component: LoginComponent, pathMatch: 'full' },
@@ -20,7 +20,7 @@ const routes: Routes = [
     ],
   },
   {
-    path: 'admin',
+    path: '',
     component: DashboardComponent,
     children: [
       { path: '', component: ViewTestsComponent, pathMatch: 'full' },
