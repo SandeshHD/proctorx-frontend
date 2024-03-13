@@ -11,11 +11,11 @@ export class DashboardComponent {
   ngOnInit() {
     let branch_id = JSON.parse(localStorage.getItem('userInfo')||'{}').id
     if(!branch_id)
-      this.router.navigate(['auth'])
+      this.router.navigate(['admin/auth'])
   }
 
   logout(){
-    this.router.navigate(['/auth'])
+    this.router.navigate(['admin/auth'])
     localStorage.removeItem('userInfo')
   }
 }
