@@ -1,0 +1,22 @@
+services:
+  admin:
+    build:
+      context: "."
+      dockerfile: "./admin.Dockerfile"
+    image: "sandeshhd/proctorx-frontend-admin:latest"
+    ports: 
+      - 4200:4200
+  students:
+    build:
+      context: "."
+      dockerfile: "./students.Dockerfile"   
+    image: "sandeshhd/proctorx-frontend-students:latest"
+    ports: 
+      - 4300:4200
+  super-admin:
+    build:
+      context: "."
+      dockerfile: "./superAdmin.Dockerfile"
+    image: "sandeshhd/proctorx-frontend-super-admin:latest"
+    ports: 
+      - 4400:4200 
