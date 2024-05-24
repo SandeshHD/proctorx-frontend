@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: proctorx-frontend-admin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: proctorx-frontend-admin
+  template:
+    metadata:
+      labels:
+        app: proctorx-frontend-admin
+    spec:
+      containers:
+      - name: proctorx-frontend-admin
+        image: sandeshhd/proctorx-frontend-admin:latest
+        ports:
+        - containerPort: 4200
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: proctorx-frontend-students
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: proctorx-frontend-students
+  template:
+    metadata:
+      labels:
+        app: proctorx-frontend-students
+    spec:
+      containers:
+      - name: proctorx-frontend-students
+        image: sandeshhd/proctorx-frontend-students:latest
+        ports:
+        - containerPort: 4300
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: proctorx-frontend-super-admin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: proctorx-frontend-super-admin
+  template:
+    metadata:
+      labels:
+        app: proctorx-frontend-super-admin
+    spec:
+      containers:
+      - name: proctorx-frontend-super-admin
+        image: sandeshhd/proctorx-frontend-super-admin:latest
+        ports:
+        - containerPort: 4400
