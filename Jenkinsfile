@@ -16,7 +16,7 @@ pipeline {
         stage('Docker Push') {
             steps {
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com', '1a048b20-d794-4a44-94d5-a29598892077') {
+                    docker.withRegistry('https://registry.hub.docker.com', '6d743854-7905-4899-8780-166d97090755') {
                         docker.image('sandeshhd/proctorx-frontend-admin:latest').push()
                         docker.image('sandeshhd/proctorx-frontend-students:latest').push()
                         docker.image('sandeshhd/proctorx-frontend-super-admin:latest').push()
