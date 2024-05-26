@@ -7,11 +7,6 @@ pipeline {
                 git 'https://github.com/SandeshHD/proctorx-frontend.git'
             }
         }
-        stage('Run Sonar Container'){
-            steps{
-                sh 'docker compose -f sonarqube-compose.yml up --build -d'
-            }
-        }
         stage('Frontend Docker Build'){
             steps{
                 sh 'docker compose build'
