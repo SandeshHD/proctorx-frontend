@@ -19,8 +19,10 @@ export class LoginComponent {
 
   onSubmit(){
     this.authService.authenticate(this.form.value).subscribe((data:any)=>{
-      localStorage.setItem('userInfo',JSON.stringify(data))
-        this.router.navigate([''])
+      const {token,...userInfo} = data;
+      localStorage.setItem('userInfo',JSON.stringify(userInfo))
+      localStorage.setItem('token',JSON.stringify(token))
+      this.router.navigate([''])
     },(err:HttpErrorResponse)=>{
       if(err.status === 404){
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Invalid credentials' })

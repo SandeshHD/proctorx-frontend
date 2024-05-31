@@ -12,23 +12,25 @@ import { AuthService } from './auth.service';
 })
 export class AuthComponent {
   form = new FormGroup({
-    username: new FormControl('',[Validators.required]),
-    password: new FormControl('',[Validators.required]),
+    username: new FormControl('', [Validators.required]),
+    password: new FormControl('', [Validators.required]),
   });
 
-  constructor(private authService: AuthService,private router:Router,private messageService:MessageService){}
+  constructor(private authService: AuthService, private router: Router, private messageService: MessageService) { }
 
-  onSubmit(){
-    this.authService.authenticate(this.form.value).subscribe((data:any)=>{
-      localStorage.setItem('userInfo',JSON.stringify(data))
-        this.router.navigate([''])
-    },(err:HttpErrorResponse)=>{
-      if(err.status === 404){
+  onSubmit() {
+    this.authService.authenticate(this.form.value).subscribe((data: any) => {
+      const { token, ...userInfo } = data;
+      localStorage.setItem('userInfo', JSON.stringify(userInfo))
+      localStorage.setItem('token', JSON.stringify(token))
+      this.router.navigate([''])
+    }, (err: HttpErrorResponse) => {
+      if (err.status === 404) {
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Invalid credentials' })
-      }else if(err.status === 400){
+      } else if (err.status === 400) {
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Bad Request' })
       }
-      else{
+      else {
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Internal Server Error' })
       }
     })
