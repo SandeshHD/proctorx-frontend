@@ -114,7 +114,7 @@
             </div>
             <div class="d-flex flex-column">
                 <p-calendar formControlName="deadline" [showTime]="true" [showSeconds]="true" placeholder="Deadline" appendTo="body" [minDate]="today"></p-calendar>
-                <small class="ng-error text-danger" *ngIf="testForm?.controls['deadline'].touched && testForm.controls['test_name'].hasError('required')">Please fill this field.</small>
+                <small class="ng-error text-danger" *ngIf="testForm?.controls['deadline'].touched && testForm.controls['deadline'].hasError('required')">Please fill this field.</small>
             </div>
         </div>
     </form>

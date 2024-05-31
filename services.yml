@@ -9,6 +9,7 @@ spec:
   - protocol: TCP
     port: 80
     targetPort: 4200
+    nodePort: 30001
     name: admin
   type: LoadBalancer
 
@@ -24,6 +25,7 @@ spec:
   - protocol: TCP
     port: 80
     targetPort: 4200
+    nodePort: 30000
     name: students
   type: LoadBalancer
 
@@ -39,6 +41,7 @@ spec:
   - protocol: TCP
     port: 80
     targetPort: 4200
+    nodePort: 30002
     name: super-admin
   type: LoadBalancer
 
