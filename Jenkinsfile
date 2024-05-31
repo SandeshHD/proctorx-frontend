@@ -37,7 +37,6 @@ pipeline {
         stage('Kubernetes Start'){
             steps{
                 script{
-                    sh 'kubectl delete pods -l group=proctorx-frontend --grace-period=0 --force'
                     sh 'kubectl apply -f deployment.yml --validate=false'
                     sh 'kubectl apply -f services.yml --validate=false'
                     sh 'kubectl get services'
