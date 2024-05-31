@@ -15,6 +15,7 @@ spec:
       containers:
       - name: proctorx-frontend-admin
         image: sandeshhd/proctorx-frontend-admin:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 4200
 
@@ -36,6 +37,7 @@ spec:
       containers:
       - name: proctorx-frontend-students
         image: sandeshhd/proctorx-frontend-students:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 4300
 ---
@@ -56,5 +58,6 @@ spec:
       containers:
       - name: proctorx-frontend-super-admin
         image: sandeshhd/proctorx-frontend-super-admin:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 4400
