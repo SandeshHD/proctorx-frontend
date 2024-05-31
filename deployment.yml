@@ -11,6 +11,7 @@ spec:
     metadata:
       labels:
         app: proctorx-frontend-admin
+        group: proctorx-frontend
     spec:
       containers:
       - name: proctorx-frontend-admin
@@ -33,6 +34,7 @@ spec:
     metadata:
       labels:
         app: proctorx-frontend-students
+        group: proctorx-frontend
     spec:
       containers:
       - name: proctorx-frontend-students
@@ -54,6 +56,7 @@ spec:
     metadata:
       labels:
         app: proctorx-frontend-super-admin
+        group: proctorx-frontend
     spec:
       containers:
       - name: proctorx-frontend-super-admin
