@@ -17,6 +17,9 @@ export class DashboardComponent {
           command: ()=>this.logout()
       },
     ];
+    let token = localStorage.getItem('token')
+    if(!token)
+      this.route.navigate(['auth'])
   }
 
   logout(){
